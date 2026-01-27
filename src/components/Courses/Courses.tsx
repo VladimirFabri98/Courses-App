@@ -7,9 +7,9 @@ type CoursesProps = {
         id: string;
         title: string;
         description: string;
-        authors: string[];
-        duration: number;
         creationDate: string;
+        duration: number;
+        authors: string[];
     }[];
     readonly mockedAuthorsList: {
         id: string;
@@ -29,19 +29,8 @@ export default function Courses({
                     return (
                         <CourseCard
                             key={course.id}
-                            courseTitle={course.title}
-                            courseDescription={course.description}
-                            authorsList={course.authors
-                                .map(
-                                    (authorId) =>
-                                        mockedAuthorsList.find(
-                                            (author) => author.id === authorId
-                                        )?.name
-                                )
-                                .filter(Boolean)
-                                .join(", ")}
-                            courseDuration={course.duration}
-                            creationDate={course.creationDate}
+                            course={course}
+                            authors={mockedAuthorsList}
                         />
                     );
                 })}
