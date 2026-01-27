@@ -20,11 +20,13 @@ function formatCreationDate(date: string): string | null {
 
     const formattedDate = new Date(year, month - 1, day);
 
-    return formattedDate.toLocaleDateString("sr-RS", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-    });
+    return formattedDate
+        .toLocaleDateString("sr-RS", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+        })
+        .replace(/\.$/, "");
 }
 
 export default formatCreationDate;

@@ -11,37 +11,29 @@ type CourseCardProps = {
     readonly creationDate: string;
 };
 
-export default function CourseCard({
-    courseTitle,
-    courseDescription,
-    authorsList,
-    courseDuration,
-    creationDate,
-}: CourseCardProps) {
+export default function CourseCard(props: any) {
     return (
         <li className="card">
-            <h3 className="title">{courseTitle}</h3>
+            <p>{JSON.stringify(props, null, 2)}</p>
+            <h3 className="title">{props.courseTitle}</h3>
             <div className="card-content">
-                <p className="card-description">{courseDescription}</p>
+                <p className="card-description">{props.courseDescription}</p>
                 <div className="info-section">
                     <div className="course-info">
                         <p className="course-author">
                             {" "}
-                            <strong>Author</strong>: {authorsList}
+                            <strong>Author</strong>: {props.authorsList}
                         </p>
                         <p className="course-duration">
                             <strong>Duration</strong>:{" "}
-                            {courseDuration
-                                ? getCourseDuration(courseDuration)
-                                : ""}{" "}
-                            {Math.trunc(courseDuration / 60) === 1
-                                ? "hour"
-                                : "hours"}
+                            {props.courseDuration
+                                ? getCourseDuration(props.courseDuration)
+                                : ""}
                         </p>
                         <p className="course-creation-date">
                             <strong>Created</strong>:{" "}
-                            {creationDate
-                                ? formatCreationDate(creationDate)
+                            {props.creationDate
+                                ? formatCreationDate(props.creationDate)
                                 : ""}
                         </p>
                     </div>
