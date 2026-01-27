@@ -1,4 +1,5 @@
 export function getCourseDuration(duration: number): string {
+    if (!duration) return "";
     let hours: string | number = Math.trunc(duration / 60);
     let minutes: string | number = Math.trunc(duration % 60);
 

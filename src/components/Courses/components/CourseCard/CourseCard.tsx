@@ -31,12 +31,12 @@ export default function CourseCard({
                         </p>
                         <p className="course-duration">
                             <strong>Duration</strong>:{" "}
-                            {getCourseDuration(duration)}{" "}
+                            {duration ? getCourseDuration(duration) : ""}{" "}
                             {Math.trunc(duration / 60) === 1 ? "hour" : "hours"}
                         </p>
                         <p className="course-creation-date">
                             <strong>Created</strong>:{" "}
-                            {formatCreationDate(created)}
+                            {created ? formatCreationDate(created) : ""}
                         </p>
                     </div>
                     <Button buttonText="Show Course" />

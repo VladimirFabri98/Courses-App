@@ -1,4 +1,5 @@
 export function formatCreationDate(date: string): string | null {
+    if (!date) return "";
     const parts = date.split("/");
 
     if (parts.length !== 3) return null;
