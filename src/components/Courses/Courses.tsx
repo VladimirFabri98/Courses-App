@@ -3,7 +3,7 @@ import CourseCard from "./components/CourseCard/CourseCard";
 import Utilities from "./components/Utilities/Utilities";
 
 type CoursesProps = {
-    mockedCoursesList: {
+    readonly mockedCoursesList: {
         id: string;
         title: string;
         description: string;
@@ -11,7 +11,7 @@ type CoursesProps = {
         duration: number;
         creationDate: string;
     }[];
-    mockedAuthorsList: {
+    readonly mockedAuthorsList: {
         id: string;
         name: string;
     }[];

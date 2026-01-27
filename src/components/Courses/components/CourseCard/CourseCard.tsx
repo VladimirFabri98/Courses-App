@@ -1,12 +1,14 @@
 import Button from "../../../../common/Button/Button";
 import "./CourseCard.css";
+import { getCourseDuration } from "../../../../helpers/getCourseDuration";
+import { formatCreationDate } from "../../../../helpers/formatCreationDate";
 
 type CourseCardProps = {
-    title: string;
-    description: string;
-    author: string;
-    duration: number;
-    created: string;
+    readonly title: string;
+    readonly description: string;
+    readonly author: string;
+    readonly duration: number;
+    readonly created: string;
 };
 
 export default function CourseCard({
@@ -29,11 +31,12 @@ export default function CourseCard({
                         </p>
                         <p className="course-duration">
                             <strong>Duration</strong>:{" "}
-                            {calculateDuration(duration)}{" "}
+                            {getCourseDuration(duration)}{" "}
                             {Math.trunc(duration / 60) === 1 ? "hour" : "hours"}
                         </p>
                         <p className="course-creation-date">
-                            <strong>Created</strong>: {formatDate(created)}
+                            <strong>Created</strong>:{" "}
+                            {formatCreationDate(created)}
                         </p>
                     </div>
                     <Button buttonText="Show Course" />
@@ -41,41 +44,4 @@ export default function CourseCard({
             </div>
         </li>
     );
-}
-
-function calculateDuration(duration: number): string {
-    let hours: string | number = Math.trunc(duration / 60);
-    let minutes: string | number = Math.trunc(duration % 60);
-
-    hours < 10 ? (hours = "0" + hours) : hours;
-    minutes === 0 ? "" : minutes < 10 ? (minutes = "0" + minutes) : minutes;
-    return `${hours}${minutes === 0 ? "" : `:${minutes}`}`;
-}
-
-function formatDate(date: string): String | null {
-    const parts = date.split("/");
-
-    if (parts.length !== 3) return null;
-
-    const [dayStr, monthStr, yearStr] = parts;
-
-    const day = Number(dayStr);
-    const month = Number(monthStr);
-    const year = Number(yearStr);
-
-    if (
-        !Number.isInteger(day) ||
-        !Number.isInteger(month) ||
-        !Number.isInteger(year)
-    ) {
-        return null;
-    }
-
-    const formattedDate = new Date(year, month - 1, day);
-
-    return formattedDate.toLocaleDateString("sr-RS", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-    });
 }

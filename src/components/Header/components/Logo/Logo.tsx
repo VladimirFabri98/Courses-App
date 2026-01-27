@@ -1,5 +1,5 @@
 type LogoProps = {
-    imgSrc: string;
+    readonly imgSrc: string;
 };
 
 export default function Logo({ imgSrc }: LogoProps) {

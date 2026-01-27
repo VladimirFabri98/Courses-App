@@ -1,13 +1,15 @@
 import Button from "../../common/Button/Button";
+import { formatCreationDate } from "../../helpers/formatCreationDate";
+import { getCourseDuration } from "../../helpers/getCourseDuration";
 import "./CourseInfo.css";
 
 type CourseInfoProps = {
-    title: string;
-    description: string;
-    id: string;
-    duration: string;
-    created: string;
-    authors: string;
+    readonly title: string;
+    readonly description: string;
+    readonly id: string;
+    readonly duration: number;
+    readonly created: string;
+    readonly authors: string;
 };
 
 export default function CourseInfo({
@@ -22,25 +24,25 @@ export default function CourseInfo({
         <section className="course-info-section">
             <h3>{title}</h3>
             <div className="course-info-container">
-                <div className="course-description">
+                <div className="course-info-description">
                     <h4>Description:</h4>
                     <p>{description}</p>
                 </div>
                 <div className="separator"></div>
-                <div className="course-details">
-                    <div className="course-id">
+                <div className="course-info-details">
+                    <div className="course-info-id">
                         <h5>ID:</h5>
                         <p>{id}</p>
                     </div>
-                    <div className="course-duration">
+                    <div className="course-info-duration">
                         <h5>Duration:</h5>
-                        <p>{duration}</p>
+                        <p>{getCourseDuration(duration)}</p>
                     </div>
-                    <div className="course-created">
+                    <div className="course-info-created">
                         <h5>Created:</h5>
-                        <p>{created}</p>
+                        <p>{formatCreationDate(created)}</p>
                     </div>
-                    <div className="course-authors">
+                    <div className="course-info-authors">
                         <h5>Authors:</h5>
                         <p>{authors}</p>
                     </div>
