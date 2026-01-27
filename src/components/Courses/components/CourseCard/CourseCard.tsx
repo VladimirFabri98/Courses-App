@@ -4,39 +4,45 @@ import { getCourseDuration } from "../../../../helpers/getCourseDuration";
 import { formatCreationDate } from "../../../../helpers/formatCreationDate";
 
 type CourseCardProps = {
-    readonly title: string;
-    readonly description: string;
-    readonly author: string;
-    readonly duration: number;
-    readonly created: string;
+    readonly courseTitle: string;
+    readonly courseDescription: string;
+    readonly authorsList: string;
+    readonly courseDuration: number;
+    readonly creationDate: string;
 };
 
 export default function CourseCard({
-    title,
-    description,
-    author,
-    duration,
-    created,
+    courseTitle,
+    courseDescription,
+    authorsList,
+    courseDuration,
+    creationDate,
 }: CourseCardProps) {
     return (
         <li className="card">
-            <h3 className="title">{title}</h3>
+            <h3 className="title">{courseTitle}</h3>
             <div className="card-content">
-                <p className="card-description">{description}</p>
+                <p className="card-description">{courseDescription}</p>
                 <div className="info-section">
                     <div className="course-info">
                         <p className="course-author">
                             {" "}
-                            <strong>Author</strong>: {author}
+                            <strong>Author</strong>: {authorsList}
                         </p>
                         <p className="course-duration">
                             <strong>Duration</strong>:{" "}
-                            {duration ? getCourseDuration(duration) : ""}{" "}
-                            {Math.trunc(duration / 60) === 1 ? "hour" : "hours"}
+                            {courseDuration
+                                ? getCourseDuration(courseDuration)
+                                : ""}{" "}
+                            {Math.trunc(courseDuration / 60) === 1
+                                ? "hour"
+                                : "hours"}
                         </p>
                         <p className="course-creation-date">
                             <strong>Created</strong>:{" "}
-                            {created ? formatCreationDate(created) : ""}
+                            {creationDate
+                                ? formatCreationDate(creationDate)
+                                : ""}
                         </p>
                     </div>
                     <Button buttonText="Show Course" />

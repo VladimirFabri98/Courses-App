@@ -29,9 +29,9 @@ export default function Courses({
                     return (
                         <CourseCard
                             key={course.id}
-                            title={course.title}
-                            description={course.description}
-                            author={course.authors
+                            courseTitle={course.title}
+                            courseDescription={course.description}
+                            authorsList={course.authors
                                 .map(
                                     (authorId) =>
                                         mockedAuthorsList.find(
@@ -40,8 +40,8 @@ export default function Courses({
                                 )
                                 .filter(Boolean)
                                 .join(", ")}
-                            duration={course.duration}
-                            created={course.creationDate}
+                            courseDuration={course.duration}
+                            creationDate={course.creationDate}
                         />
                     );
                 })}
