@@ -1,4 +1,4 @@
-export function formatCreationDate(date: string): string | null {
+function formatCreationDate(date: string): string | null {
     if (!date) return "";
     const parts = date.split("/");
 
@@ -26,3 +26,5 @@ export function formatCreationDate(date: string): string | null {
         year: "numeric",
     });
 }
+
+export default formatCreationDate;

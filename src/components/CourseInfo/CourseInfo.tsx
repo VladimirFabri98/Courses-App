@@ -1,6 +1,6 @@
 import Button from "../../common/Button/Button";
-import { formatCreationDate } from "../../helpers/formatCreationDate";
-import { getCourseDuration } from "../../helpers/getCourseDuration";
+import formatCreationDate from "../../helpers/formatCreationDate";
+import getCourseDuration from "../../helpers/getCourseDuration";
 import "./CourseInfo.css";
 
 type CourseInfoProps = {

@@ -1,4 +1,4 @@
-export function getCourseDuration(duration: number): string {
+function getCourseDuration(duration: number): string {
     if (!duration) return "";
     let hours: string | number = Math.trunc(duration / 60);
     let minutes: string | number = Math.trunc(duration % 60);
@@ -7,3 +7,5 @@ export function getCourseDuration(duration: number): string {
     minutes === 0 ? "" : minutes < 10 ? (minutes = "0" + minutes) : minutes;
     return `${hours}${minutes === 0 ? "" : `:${minutes}`}`;
 }
+
+export default getCourseDuration;

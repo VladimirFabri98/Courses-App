@@ -1,7 +1,7 @@
 import Button from "../../../../common/Button/Button";
 import "./CourseCard.css";
-import { getCourseDuration } from "../../../../helpers/getCourseDuration";
-import { formatCreationDate } from "../../../../helpers/formatCreationDate";
+import getCourseDuration from "../../../../helpers/getCourseDuration";
+import formatCreationDate from "../../../../helpers/formatCreationDate";
 
 type CourseCardProps = {
     readonly courseTitle: string;
