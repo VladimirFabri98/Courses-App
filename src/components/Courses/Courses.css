@@ -1,11 +1,14 @@
 .courses-main {
     display: flex;
-    justify-content: center;
     background-color: #f7f7f7;
+    flex-direction: column;
+    align-items: center;
+    gap: 33px;
+    margin-top: 71px;
 }
 
 .courses-list {
-    margin: 33px 0 0 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
     gap: 32px;

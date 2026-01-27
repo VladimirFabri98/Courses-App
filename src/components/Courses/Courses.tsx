@@ -1,5 +1,6 @@
 import "./Courses.css";
 import CourseCard from "./components/CourseCard/CourseCard";
+import Utilities from "./components/Utilities/Utilities";
 
 type CoursesProps = {
     mockedCoursesList: {
@@ -22,6 +23,7 @@ export default function Courses({
 }: CoursesProps) {
     return (
         <main className="courses-main">
+            <Utilities />
             <ul className="courses-list">
                 {mockedCoursesList.map((course) => {
                     return (
