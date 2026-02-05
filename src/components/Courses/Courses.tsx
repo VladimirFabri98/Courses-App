@@ -1,6 +1,7 @@
-import "./Courses.css";
+import Registration from "../Registration/Registration";
 import CourseCard from "./components/CourseCard/CourseCard";
 import Utilities from "./components/Utilities/Utilities";
+import "./Courses.css";
 
 type CoursesProps = {
     readonly mockedCoursesList: {
@@ -35,6 +36,7 @@ export default function Courses({
                     );
                 })}
             </ul>
+            <Registration />
         </main>
     );
 }
