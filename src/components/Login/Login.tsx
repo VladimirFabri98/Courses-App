@@ -16,7 +16,6 @@ export default function Login() {
     }
 
     function validateLoginForm(e: React.FormEvent): void {
-        console.log("Form submitted!");
         e.preventDefault();
         email && password ? setFormValid(true) : setFormValid(false);
     }

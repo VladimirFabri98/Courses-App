@@ -5,7 +5,7 @@ type ButtonProps = {
     readonly children: ReactNode;
     readonly type?: "submit" | "button" | "reset";
     readonly form?: string;
-    readonly onClick?: () => void;
+    readonly onClick?: (value?: any) => void;
 };
 
 export default function Button({

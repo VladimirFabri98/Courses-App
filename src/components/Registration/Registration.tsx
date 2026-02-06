@@ -20,7 +20,6 @@ export default function Registration() {
     }
 
     function validateRegistrationForm(e: React.FormEvent): void {
-        console.log("Form submitted!");
         e.preventDefault();
         name && email && password ? setFormValid(true) : setFormValid(false);
     }

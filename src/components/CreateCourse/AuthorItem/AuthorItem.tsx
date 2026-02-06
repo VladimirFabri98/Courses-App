@@ -1,17 +1,27 @@
 import "./AuthorItem.css";
-import addButtonSvg from "../../../assets/add.svg";
-import deleteButtonSvg from "../../../assets/trash.svg";
 import Button from "../../../common/Button/Button";
+import addIcon from "../../../assets/add.svg";
+import deleteIcon from "../../../assets/trash.svg";
 
-export default function AuthorItem() {
+type AuthorItemProps = {
+    readonly authorName: string;
+    readonly handleAdding?: () => void;
+    readonly handleDeletion?: () => void;
+};
+
+export default function AuthorItem({
+    authorName,
+    handleAdding = () => {},
+    handleDeletion = () => {},
+}: AuthorItemProps) {
     return (
         <li className="author-item">
-            <p className="author-name">Author Name</p>
-            <Button>
-                <img></img>
+            <p className="author-name">{authorName}</p>
+            <Button onClick={handleAdding}>
+                <img src={addIcon} alt="Add author"></img>
             </Button>
-            <Button>
-                <img></img>
+            <Button onClick={handleDeletion}>
+                <img src={deleteIcon} alt="Delete author"></img>
             </Button>
         </li>
     );

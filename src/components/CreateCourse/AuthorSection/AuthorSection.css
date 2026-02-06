@@ -35,14 +35,16 @@
 }
 
 .author-section--create-section button {
-    transform: translateY(4.5px);
+    transform: translateY(-4.5px);
     min-width: 185px;
 }
 
 .author-section--course-authors {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 24px;
+    min-width: 250px;
 }
 
 .author-section--no-authors {

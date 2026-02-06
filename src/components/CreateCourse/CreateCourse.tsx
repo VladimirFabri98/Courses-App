@@ -4,12 +4,22 @@ import "./CreateCourse.css";
 import Button from "../../common/Button/Button";
 import Duration from "./Duration/Duration";
 import AuthorSection from "./AuthorSection/AuthorSection";
+import { Author, Course } from "../../types";
+import { v4 as uuidv4 } from "uuid";
 
-export default function CreateCourse() {
+type CreateCourseProps = {
+    readonly onCreateCourse: (course: Course) => void;
+    readonly onUpdateAuthors: (authors: Author[]) => void;
+};
+
+export default function CreateCourse({
+    onCreateCourse,
+    onUpdateAuthors,
+}: CreateCourseProps) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [duration, setDuration] = useState(0);
-    const [authorName, setAuthorName] = useState("");
+    const [courseAuthorsList, setCourseAuthorsList] = useState<Author[]>([]);
     const [formValid, setFormValid] = useState(true);
 
     function handleTitleChange(value: string) {
@@ -25,17 +35,52 @@ export default function CreateCourse() {
         setDuration(Number.isNaN(num) ? 0 : num);
     }
 
-    function handleAuthorChange(value: string) {
-        setAuthorName(value);
+    function clearAllFields() {
+        setTitle("");
+        setDescription("");
+        setDuration(0);
+        setCourseAuthorsList([]);
     }
 
-    function validateLoginForm(e: React.FormEvent) {
+    function validateCreationForm(e: React.FormEvent) {
         e.preventDefault();
-        title.trim().length >= 2 &&
-        description.trim().length >= 2 &&
-        duration > 0
-            ? setFormValid(true)
-            : setFormValid(false);
+        if (
+            title.trim().length >= 2 &&
+            description.trim().length >= 2 &&
+            duration > 0
+        ) {
+            setFormValid(true);
+            createNewCourse();
+            clearAllFields();
+        } else {
+            setFormValid(false);
+        }
+    }
+
+    function createNewCourse() {
+        const newCourseId: string = uuidv4();
+        const newCourse: Course = {
+            id: newCourseId,
+            title: title,
+            description: description,
+            duration: duration,
+            authors: courseAuthorsList.map((author) => author.id),
+            creationDate: new Date().toLocaleDateString("en-GB"),
+        };
+        onCreateCourse(newCourse);
+        onUpdateAuthors(courseAuthorsList);
+    }
+
+    function getCourseAuthors(): Author[] {
+        return courseAuthorsList;
+    }
+
+    function handleCourseAuthorsListChange(authors: Author[]) {
+        setCourseAuthorsList(authors);
+    }
+
+    function handleAddingSingleAuthor(author: Author) {
+        setCourseAuthorsList([...courseAuthorsList, author]);
     }
 
     return (
@@ -48,7 +93,7 @@ export default function CreateCourse() {
                     id="create-course-form"
                     className="create-course--form"
                     noValidate
-                    onSubmit={(e) => validateLoginForm(e)}
+                    onSubmit={(e) => validateCreationForm(e)}
                 >
                     <h4 className="create-course--subtitle">Main Info</h4>
                     <Input
@@ -78,8 +123,9 @@ export default function CreateCourse() {
                         handleDurationChange={handleDurationChange}
                     />
                     <AuthorSection
-                        authorName={authorName}
-                        onAuthorNameChange={handleAuthorChange}
+                        addAuthor={handleAddingSingleAuthor}
+                        getAuthors={getCourseAuthors}
+                        updateAuthors={handleCourseAuthorsListChange}
                     />
                 </form>
                 <div className="create-course--button-container">
