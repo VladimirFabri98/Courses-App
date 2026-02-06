@@ -1,3 +1,5 @@
+import CreateCourse from "../CreateCourse/CreateCourse";
+import Login from "../Login/Login";
 import Registration from "../Registration/Registration";
 import CourseCard from "./components/CourseCard/CourseCard";
 import Utilities from "./components/Utilities/Utilities";
@@ -36,6 +38,8 @@ export default function Courses({
                     );
                 })}
             </ul>
+            <CreateCourse />
+            <Login />
             <Registration />
         </main>
     );

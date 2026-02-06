@@ -20,6 +20,7 @@ export default function Registration() {
     }
 
     function validateRegistrationForm(e: React.FormEvent): void {
+        console.log("Form submitted!");
         e.preventDefault();
         name && email && password ? setFormValid(true) : setFormValid(false);
     }
@@ -29,14 +30,15 @@ export default function Registration() {
             <h3 className="registration-title">Registration</h3>
             <div className="registration-form-container">
                 <form
-                    className="registration-form"
                     noValidate
+                    className="registration-form"
                     onSubmit={(e) => validateRegistrationForm(e)}
                 >
                     <Input
                         inputName="Name"
                         labelText="Name"
                         placeholderText="Input text"
+                        required={true}
                         value={name}
                         valid={formValid}
                         onChange={handleNameChange}
@@ -45,6 +47,7 @@ export default function Registration() {
                         inputName="Email"
                         labelText="Email"
                         placeholderText="Input text"
+                        required={true}
                         inputType="email"
                         value={email}
                         valid={formValid}
@@ -54,12 +57,13 @@ export default function Registration() {
                         inputName="Password"
                         labelText="Password"
                         placeholderText="Input text"
+                        required={true}
                         inputType="password"
                         value={password}
                         valid={formValid}
                         onChange={handlePasswordChange}
                     />
-                    <Button buttonText="Register" />
+                    <Button buttonText="Register" type="submit" />
                     <p className="registration-alternate-login">
                         If you have an account you may <a href="#">Login</a>
                     </p>

@@ -16,6 +16,7 @@ export default function Login() {
     }
 
     function validateLoginForm(e: React.FormEvent): void {
+        console.log("Form submitted!");
         e.preventDefault();
         email && password ? setFormValid(true) : setFormValid(false);
     }
@@ -25,14 +26,15 @@ export default function Login() {
             <h3 className="login-title">Login</h3>
             <div className="login-form-container">
                 <form
-                    className="login-form"
                     noValidate
+                    className="login-form"
                     onSubmit={(e) => validateLoginForm(e)}
                 >
                     <Input
                         inputName="Email"
                         labelText="Email"
                         placeholderText="Input text"
+                        required={true}
                         inputType="email"
                         value={email}
                         valid={formValid}
@@ -42,12 +44,13 @@ export default function Login() {
                         inputName="Password"
                         labelText="Password"
                         placeholderText="Input text"
+                        required={true}
                         inputType="password"
                         value={password}
                         valid={formValid}
                         onChange={handlePasswordChange}
                     />
-                    <Button buttonText="Register" />
+                    <Button buttonText="Register" type="submit" />
                     <p className="login-alternate-login">
                         If you don't have an account you may
                         <br></br>

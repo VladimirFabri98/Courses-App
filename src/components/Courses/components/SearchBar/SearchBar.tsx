@@ -16,9 +16,11 @@ export default function SearchBar() {
                 inputName="search-input"
                 labelText=""
                 placeholderText="Input text"
+                required={false}
                 value={searchText}
                 valid={true}
                 onChange={handleSearch}
+                hasWarning={false}
             />
             <Button buttonText="Search" />
         </div>

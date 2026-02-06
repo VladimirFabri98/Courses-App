@@ -4,6 +4,11 @@
     border-radius: 4px;
     background-color: #007298;
     color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    border: none;
+    text-transform: uppercase;
     font-family:
         system-ui,
         -apple-system,
@@ -16,11 +21,6 @@
         "Open Sans",
         "Helvetica Neue",
         sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 24px;
-    border: none;
-    text-transform: uppercase;
 }
 
 .button:hover {
