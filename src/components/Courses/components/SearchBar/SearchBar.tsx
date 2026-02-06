@@ -22,7 +22,7 @@ export default function SearchBar() {
                 onChange={handleSearch}
                 hasWarning={false}
             />
-            <Button buttonText="Search" />
+            <Button>Search</Button>
         </div>
     );
 }

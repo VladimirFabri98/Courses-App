@@ -40,7 +40,7 @@ export default function CourseInfo({ courses, authors }: CourseInfoProps) {
                     </div>
                 </div>
             </div>
-            <Button buttonText="Back" />
+            <Button>Back</Button>
         </section>
     );
 }

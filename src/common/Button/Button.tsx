@@ -1,26 +1,22 @@
+import { ReactNode } from "react";
 import "./Button.css";
 
 type ButtonProps = {
-    readonly buttonText: string;
-    readonly type?: string;
+    readonly children: ReactNode;
+    readonly type?: "submit" | "button" | "reset";
     readonly form?: string;
     readonly onClick?: () => void;
 };
 
 export default function Button({
-    buttonText,
-    type,
+    children,
+    type = "button",
     form,
     onClick,
 }: ButtonProps) {
     return (
-        <button
-            className="button"
-            type={type == "submit" ? type : "button"}
-            form={form && form}
-            onClick={onClick}
-        >
-            {buttonText}
+        <button className="button" type={type} form={form} onClick={onClick}>
+            {children}
         </button>
     );
 }

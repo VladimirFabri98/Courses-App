@@ -83,12 +83,10 @@ export default function CreateCourse() {
                     />
                 </form>
                 <div className="create-course--button-container">
-                    <Button buttonText="Cancel" />
-                    <Button
-                        buttonText="Create Course"
-                        type="submit"
-                        form="create-course-form"
-                    />
+                    <Button>Cancel</Button>
+                    <Button type="submit" form="create-course-form">
+                        Create Course
+                    </Button>
                 </div>
             </div>
         </>

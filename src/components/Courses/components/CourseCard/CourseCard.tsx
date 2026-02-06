@@ -44,7 +44,7 @@ export default function CourseCard({ course, authors }: CourseCardProps) {
                             {formatCreationDate(course.creationDate)}
                         </p>
                     </div>
-                    <Button buttonText="Show Course" />
+                    <Button>Show Course</Button>
                 </div>
             </div>
         </li>

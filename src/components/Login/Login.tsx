@@ -50,7 +50,7 @@ export default function Login() {
                         valid={formValid}
                         onChange={handlePasswordChange}
                     />
-                    <Button buttonText="Register" type="submit" />
+                    <Button type="submit">Register</Button>
                     <p className="login-alternate-login">
                         If you don't have an account you may
                         <br></br>

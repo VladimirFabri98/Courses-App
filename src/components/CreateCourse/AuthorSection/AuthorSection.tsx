@@ -28,7 +28,7 @@ export default function AuthorSection({
                         onChange={onAuthorNameChange}
                         minLength={2}
                     />
-                    <Button buttonText="Create Author" />
+                    <Button>Create Author</Button>
                 </div>
                 <h5 className="author-section--subtitle">Authors List</h5>
                 <AuthorItem />

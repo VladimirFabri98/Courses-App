@@ -6,7 +6,7 @@ export default function Utilities() {
     return (
         <section className="options-section">
             <SearchBar />
-            <Button buttonText="Add new course" />
+            <Button>Add new course</Button>
         </section>
     );
 }
