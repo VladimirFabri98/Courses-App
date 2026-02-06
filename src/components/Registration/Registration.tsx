@@ -27,7 +27,7 @@ export default function Registration() {
     return (
         <>
             <h3 className="registration-title">Registration</h3>
-            <div className="registration-form-container">
+            <div id="registration" className="registration-form-container">
                 <form
                     noValidate
                     className="registration-form"
@@ -64,7 +64,8 @@ export default function Registration() {
                     />
                     <Button type="submit">Register</Button>
                     <p className="registration-alternate-login">
-                        If you have an account you may <a>Login</a>
+                        If you have an account you may{" "}
+                        <a href="#login">Login</a>
                     </p>
                 </form>
             </div>

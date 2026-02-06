@@ -23,7 +23,7 @@ export default function Login() {
     return (
         <>
             <h3 className="login-title">Login</h3>
-            <div className="login-form-container">
+            <div id="login" className="login-form-container">
                 <form
                     noValidate
                     className="login-form"
@@ -53,7 +53,7 @@ export default function Login() {
                     <p className="login-alternate-login">
                         If you don't have an account you may
                         <br></br>
-                        <a>Register</a>
+                        <a href="#registration">Register</a>
                     </p>
                 </form>
             </div>
