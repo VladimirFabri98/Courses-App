@@ -1,7 +1,7 @@
 import "./AuthorItem.css";
-import Button from "../../../common/Button/Button";
-import addIcon from "../../../assets/add.svg";
-import deleteIcon from "../../../assets/trash.svg";
+import Button from "../../common/Button/Button";
+import addIcon from "../../assets/add.svg";
+import deleteIcon from "../../assets/trash.svg";
 
 type AuthorItemProps = {
     readonly authorName: string;
@@ -9,7 +9,7 @@ type AuthorItemProps = {
     readonly handleDeletion?: () => void;
 };
 
-export default function AuthorItem({
+function AuthorItem({
     authorName,
     handleAdding = () => {},
     handleDeletion = () => {},
@@ -26,3 +26,5 @@ export default function AuthorItem({
         </li>
     );
 }
+
+export default AuthorItem;

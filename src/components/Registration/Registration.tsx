@@ -64,7 +64,7 @@ export default function Registration() {
                     />
                     <Button type="submit">Register</Button>
                     <p className="registration-alternate-login">
-                        If you have an account you may <a href="#">Login</a>
+                        If you have an account you may <a>Login</a>
                     </p>
                 </form>
             </div>

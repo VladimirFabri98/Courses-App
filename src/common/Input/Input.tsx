@@ -81,8 +81,8 @@ export default function Input({
                     className="input-component--invalid-input-message"
                     style={
                         (value || initialValue) && (valid || value)
-                            ? { visibility: "hidden" }
-                            : { visibility: "visible" }
+                            ? { display: "none" }
+                            : { display: "block" }
                     }
                 >{`${inputName} is required.`}</p>
             )}

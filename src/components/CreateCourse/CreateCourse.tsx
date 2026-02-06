@@ -12,10 +12,7 @@ type CreateCourseProps = {
     readonly onUpdateAuthors: (authors: Author[]) => void;
 };
 
-export default function CreateCourse({
-    onCreateCourse,
-    onUpdateAuthors,
-}: CreateCourseProps) {
+function CreateCourse({ onCreateCourse, onUpdateAuthors }: CreateCourseProps) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [duration, setDuration] = useState(0);
@@ -138,3 +135,5 @@ export default function CreateCourse({
         </>
     );
 }
+
+export default CreateCourse;

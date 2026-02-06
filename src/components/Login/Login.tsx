@@ -49,11 +49,11 @@ export default function Login() {
                         valid={formValid}
                         onChange={handlePasswordChange}
                     />
-                    <Button type="submit">Register</Button>
+                    <Button type="submit">Login</Button>
                     <p className="login-alternate-login">
                         If you don't have an account you may
                         <br></br>
-                        <a href="#">Register</a>
+                        <a>Register</a>
                     </p>
                 </form>
             </div>
