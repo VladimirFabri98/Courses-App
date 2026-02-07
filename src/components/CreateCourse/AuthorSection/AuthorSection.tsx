@@ -78,12 +78,12 @@ export default function AuthorSection({
                 <ul className="author-section--authors-list">
                     {authorsList.map((author) => (
                         <AuthorItem
-                            // authorsName={author.name}
+                            author={author}
+                            adding={true}
                             key={author.id}
-                            // isAuthorsList={true}
-                            // onButtonClick={() =>
-                            //     onAddingFromListToCourses(author)
-                            // }
+                            onButtonClick={() =>
+                                onAddingFromListToCourses(author)
+                            }
                         />
                     ))}
                 </ul>
@@ -95,9 +95,9 @@ export default function AuthorSection({
                         {getAuthors().map((author) => (
                             <AuthorItem
                                 key={author.id}
-                                // isAuthorsList={false}
-                                // authorsName={author.name}
-                                // onButtonClick={() => onRemovalFromList(author)}
+                                adding={false}
+                                author={author}
+                                onButtonClick={() => onRemovalFromList(author)}
                             />
                         ))}
                     </ul>

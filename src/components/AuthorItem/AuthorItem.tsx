@@ -2,24 +2,24 @@ import "./AuthorItem.css";
 import Button from "../../common/Button/Button";
 import addIcon from "../../assets/add.svg";
 import deleteIcon from "../../assets/trash.svg";
+import { Author } from "../../types";
 
 type AuthorItemProps = {
-    readonly authorsName: string;
+    readonly author: Author;
     readonly onButtonClick: (author: string) => void;
+    readonly adding: boolean;
 };
 
-function AuthorItem(props: any) {
+function AuthorItem({ author, onButtonClick, adding }: AuthorItemProps) {
     return (
         <li className="author-item">
-            <p>{JSON.stringify(props, null, 2)}</p>
-            {/* <p className="author-name">{authorsName}</p>
-            <Button onClick={onButtonClick}>
+            <p className="author-name">{author.name}</p>
+            <Button onClick={adding ? onButtonClick : () => {}}>
                 <img src={addIcon} alt="Add author"></img>
             </Button>
-            <Button onClick={onButtonClick}>
+            <Button onClick={!adding ? onButtonClick : () => {}}>
                 <img src={deleteIcon} alt="Delete author"></img>
-            </Button> */}
-            )
+            </Button>
         </li>
     );
 }
