@@ -76,15 +76,8 @@ export default function Input({
                     }}
                 ></textarea>
             )}
-            {hasWarning && (
-                <p
-                    className="input-component--invalid-input-message"
-                    style={
-                        (value || initialValue) && (valid || value)
-                            ? { display: "none" }
-                            : { display: "block" }
-                    }
-                >{`${inputName} is required.`}</p>
+            {!((value || initialValue) && (valid || value) && hasWarning) && (
+                <p className="input-component--invalid-input-message">{`${inputName} is required.`}</p>
             )}
         </label>
     );

@@ -53,7 +53,7 @@ export default function Login() {
                     <p className="login-alternate-login">
                         If you don't have an account you may
                         <br></br>
-                        <a href="#registration">Register</a>
+                        <a href="#registration">Registration</a>
                     </p>
                 </form>
             </div>
