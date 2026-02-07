@@ -5,27 +5,21 @@ import deleteIcon from "../../assets/trash.svg";
 
 type AuthorItemProps = {
     readonly authorsName: string;
-    readonly isAuthorsList: boolean;
     readonly onButtonClick: (author: string) => void;
 };
 
-function AuthorItem({
-    authorsName,
-    isAuthorsList,
-    onButtonClick,
-}: AuthorItemProps) {
+function AuthorItem(props: any) {
     return (
         <li className="author-item">
-            <p className="author-name">{authorsName}</p>
-            {isAuthorsList ? (
-                <Button onClick={onButtonClick}>
-                    <img src={addIcon} alt="Add author"></img>
-                </Button>
-            ) : (
-                <Button onClick={onButtonClick}>
-                    <img src={deleteIcon} alt="Delete author"></img>
-                </Button>
-            )}
+            <p>{JSON.stringify(props, null, 2)}</p>
+            {/* <p className="author-name">{authorsName}</p>
+            <Button onClick={onButtonClick}>
+                <img src={addIcon} alt="Add author"></img>
+            </Button>
+            <Button onClick={onButtonClick}>
+                <img src={deleteIcon} alt="Delete author"></img>
+            </Button> */}
+            )
         </li>
     );
 }
