@@ -32,6 +32,14 @@ function CreateCourse({ onCreateCourse, onUpdateAuthors }: CreateCourseProps) {
         setDuration(Number.isNaN(num) ? 0 : num);
     }
 
+    function handleCourseAuthorsListChange(authors: Author[]) {
+        setCourseAuthorsList(authors);
+    }
+
+    function handleAddingSingleAuthor(author: Author) {
+        setCourseAuthorsList([...courseAuthorsList, author]);
+    }
+
     function clearAllFields() {
         setTitle("");
         setDescription("");
@@ -70,14 +78,6 @@ function CreateCourse({ onCreateCourse, onUpdateAuthors }: CreateCourseProps) {
 
     function getCourseAuthors(): Author[] {
         return courseAuthorsList;
-    }
-
-    function handleCourseAuthorsListChange(authors: Author[]) {
-        setCourseAuthorsList(authors);
-    }
-
-    function handleAddingSingleAuthor(author: Author) {
-        setCourseAuthorsList([...courseAuthorsList, author]);
     }
 
     return (

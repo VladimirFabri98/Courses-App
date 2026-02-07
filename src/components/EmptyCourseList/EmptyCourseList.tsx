@@ -8,7 +8,7 @@ export default function EmptyCourseList() {
             <h5 className="empty-subtitle">
                 {`Please use "Add New Course" button to add your first course`}
             </h5>
-            <Button buttonText="Add new course" />
+            <Button>Add new course</Button>
         </main>
     );
 }

@@ -39,17 +39,23 @@ export default function AuthorSection({
         }
     }
 
-    function onAddingFromListToCourses(author: Author) {
+    function onAddingFromListToCourses(authorId: string) {
+        const author = authorsList.find((a) => a.id === authorId);
+        if (!author) return;
+
         const updatedAuthorsList = authorsList.filter(
-            (listAuthor) => listAuthor.id !== author.id
+            (listAuthor) => listAuthor.id !== authorId
         );
         setAuthorsList(updatedAuthorsList);
         addAuthor(author);
     }
 
-    function onRemovalFromList(author: Author) {
+    function onRemovalFromList(authorId: string) {
+        const author = getAuthors().find((a) => a.id === authorId);
+        if (!author) return;
+
         const updatedCoursesList = getAuthors().filter(
-            (courseAuthor) => courseAuthor.id !== author.id
+            (courseAuthor) => courseAuthor.id !== authorId
         );
         updateAuthors(updatedCoursesList);
         setAuthorsList([...authorsList, author]);
@@ -82,7 +88,7 @@ export default function AuthorSection({
                             adding={true}
                             key={author.id}
                             onButtonClick={() =>
-                                onAddingFromListToCourses(author)
+                                onAddingFromListToCourses(author.id)
                             }
                         />
                     ))}
@@ -97,7 +103,9 @@ export default function AuthorSection({
                                 key={author.id}
                                 adding={false}
                                 author={author}
-                                onButtonClick={() => onRemovalFromList(author)}
+                                onButtonClick={() =>
+                                    onRemovalFromList(author.id)
+                                }
                             />
                         ))}
                     </ul>

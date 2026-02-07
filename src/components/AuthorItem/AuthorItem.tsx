@@ -6,7 +6,7 @@ import { Author } from "../../types";
 
 type AuthorItemProps = {
     readonly author: Author;
-    readonly onButtonClick: (author: string) => void;
+    readonly onButtonClick: (authorId: string) => void;
     readonly adding: boolean;
 };
 
