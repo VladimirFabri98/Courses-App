@@ -35,9 +35,29 @@ export default function Courses({
         setAuthorsList(merged);
     }
 
+    function handleSearch(searchString: string) {
+        const filteredCourses = courseList.filter((course) => {
+            if (
+                course.title
+                    .toLowerCase()
+                    .includes(searchString.toLowerCase()) ||
+                course.id.toLowerCase().includes(searchString.toLowerCase())
+            )
+                return course;
+        });
+        setCourseList([...filteredCourses]);
+    }
+
+    function handleSearchCleared() {
+        setCourseList([...mockedCoursesList]);
+    }
+
     return (
         <main className="courses-main">
-            <Utilities />
+            <Utilities
+                onSearch={handleSearch}
+                onSearchCleared={handleSearchCleared}
+            />
             <ul className="courses-list">
                 {courseList.map((course) => {
                     return (

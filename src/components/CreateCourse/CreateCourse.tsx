@@ -6,6 +6,7 @@ import Duration from "./Duration/Duration";
 import AuthorSection from "./AuthorSection/AuthorSection";
 import { Author, Course } from "../../types";
 import { v4 as uuidv4 } from "uuid";
+import { mockedAuthorsList } from "../../mockedData";
 
 type CreateCourseProps = {
     readonly onCreateCourse: (course: Course) => void;
@@ -17,6 +18,7 @@ function CreateCourse({ onCreateCourse, onUpdateAuthors }: CreateCourseProps) {
     const [description, setDescription] = useState("");
     const [duration, setDuration] = useState(0);
     const [courseAuthorsList, setCourseAuthorsList] = useState<Author[]>([]);
+    const [authorsList, setAuthorsList] = useState(mockedAuthorsList);
     const [formValid, setFormValid] = useState(true);
 
     function handleTitleChange(value: string) {
@@ -36,14 +38,20 @@ function CreateCourse({ onCreateCourse, onUpdateAuthors }: CreateCourseProps) {
         setCourseAuthorsList(authors);
     }
 
-    function handleAddingSingleAuthor(author: Author) {
+    function handleAddingSingleCourseAuthor(author: Author) {
         setCourseAuthorsList([...courseAuthorsList, author]);
+    }
+
+    function handleAuthorsListChange(authors: Author[]) {
+        setAuthorsList(authors);
     }
 
     function clearAllFields() {
         setTitle("");
         setDescription("");
         setDuration(0);
+        if (courseAuthorsList.length !== 0)
+            setAuthorsList([...authorsList, ...courseAuthorsList]);
         setCourseAuthorsList([]);
     }
 
@@ -55,6 +63,7 @@ function CreateCourse({ onCreateCourse, onUpdateAuthors }: CreateCourseProps) {
             duration > 0
         ) {
             setFormValid(true);
+
             createNewCourse();
             clearAllFields();
         } else {
@@ -78,6 +87,10 @@ function CreateCourse({ onCreateCourse, onUpdateAuthors }: CreateCourseProps) {
 
     function getCourseAuthors(): Author[] {
         return courseAuthorsList;
+    }
+
+    function getAuthorsList(): Author[] {
+        return authorsList;
     }
 
     return (
@@ -120,9 +133,11 @@ function CreateCourse({ onCreateCourse, onUpdateAuthors }: CreateCourseProps) {
                         handleDurationChange={handleDurationChange}
                     />
                     <AuthorSection
-                        addAuthor={handleAddingSingleAuthor}
-                        getAuthors={getCourseAuthors}
-                        updateAuthors={handleCourseAuthorsListChange}
+                        addCourseAuthor={handleAddingSingleCourseAuthor}
+                        getCourseAuthors={getCourseAuthors}
+                        updateCourseAuthors={handleCourseAuthorsListChange}
+                        getAuthorsList={getAuthorsList}
+                        updateAuthorsList={handleAuthorsListChange}
                     />
                 </form>
                 <div className="create-course--button-container">

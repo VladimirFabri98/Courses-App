@@ -27,7 +27,7 @@ export default function Input({
     minLength,
     minValue = 0,
     multiline,
-    hasWarning = true,
+    hasWarning,
 }: inputProps) {
     let initialValue = true;
 
@@ -52,7 +52,6 @@ export default function Input({
                     value={value}
                     onChange={(e) => {
                         onChange(e.target.value);
-                        console.log(initialValue, valid);
                         initialValue && (initialValue = false);
                     }}
                 ></input>
@@ -76,7 +75,7 @@ export default function Input({
                     }}
                 ></textarea>
             )}
-            {!((value || initialValue) && (valid || value) && hasWarning) && (
+            {!((value || initialValue) && (valid || value) && !hasWarning) && (
                 <p className="input-component--invalid-input-message">{`${inputName} is required.`}</p>
             )}
         </label>

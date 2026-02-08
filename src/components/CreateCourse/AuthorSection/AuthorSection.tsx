@@ -2,23 +2,25 @@ import Button from "../../../common/Button/Button";
 import Input from "../../../common/Input/Input";
 import AuthorItem from "../../AuthorItem/AuthorItem";
 import "./AuthorSection.css";
-import { mockedAuthorsList } from "../../../mockedData";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Author } from "../../../types";
 
 type AuthorSectionProps = {
-    readonly getAuthors: () => Author[];
-    readonly updateAuthors: (authors: Author[]) => void;
-    readonly addAuthor: (author: Author) => void;
+    readonly getCourseAuthors: () => Author[];
+    readonly updateCourseAuthors: (authors: Author[]) => void;
+    readonly addCourseAuthor: (author: Author) => void;
+    readonly getAuthorsList: () => Author[];
+    readonly updateAuthorsList: (authors: Author[]) => void;
 };
 
 export default function AuthorSection({
-    getAuthors,
-    updateAuthors,
-    addAuthor,
+    getCourseAuthors,
+    updateCourseAuthors,
+    addCourseAuthor,
+    getAuthorsList,
+    updateAuthorsList,
 }: AuthorSectionProps) {
-    const [authorsList, setAuthorsList] = useState(mockedAuthorsList);
     const [authorName, setAuthorName] = useState("");
     const [isValidInput, setIsValidInput] = useState(true);
 
@@ -33,32 +35,32 @@ export default function AuthorSection({
             setIsValidInput(true);
             const newAuthorId = uuidv4();
             const newAuthor = { id: newAuthorId, name: authorName };
-            const newList = [...authorsList, newAuthor];
+            const newList = [...getAuthorsList(), newAuthor];
             onAuthorNameChange("");
-            setAuthorsList(newList);
+            updateAuthorsList(newList);
         }
     }
 
     function onAddingFromListToCourses(authorId: string) {
-        const author = authorsList.find((a) => a.id === authorId);
+        const author = getAuthorsList().find((a) => a.id === authorId);
         if (!author) return;
 
-        const updatedAuthorsList = authorsList.filter(
+        const updatedAuthorsList = getAuthorsList().filter(
             (listAuthor) => listAuthor.id !== authorId
         );
-        setAuthorsList(updatedAuthorsList);
-        addAuthor(author);
+        updateAuthorsList(updatedAuthorsList);
+        addCourseAuthor(author);
     }
 
     function onRemovalFromList(authorId: string) {
-        const author = getAuthors().find((a) => a.id === authorId);
+        const author = getCourseAuthors().find((a) => a.id === authorId);
         if (!author) return;
 
-        const updatedCoursesList = getAuthors().filter(
+        const updatedCoursesList = getCourseAuthors().filter(
             (courseAuthor) => courseAuthor.id !== authorId
         );
-        updateAuthors(updatedCoursesList);
-        setAuthorsList([...authorsList, author]);
+        updateCourseAuthors(updatedCoursesList);
+        updateAuthorsList([...getAuthorsList(), author]);
     }
 
     return (
@@ -82,7 +84,7 @@ export default function AuthorSection({
                 </div>
                 <h5 className="author-section--subtitle">Authors List</h5>
                 <ul className="author-section--authors-list">
-                    {authorsList.map((author) => (
+                    {getAuthorsList().map((author) => (
                         <AuthorItem
                             author={author}
                             adding={true}
@@ -96,9 +98,9 @@ export default function AuthorSection({
             </div>
             <div className="author-section--course-authors">
                 <h4 className="author-section--title">Course Authors</h4>
-                {getAuthors().length ? (
+                {getCourseAuthors().length ? (
                     <ul className="author-section--authors-list">
-                        {getAuthors().map((author) => (
+                        {getCourseAuthors().map((author) => (
                             <AuthorItem
                                 key={author.id}
                                 adding={false}
