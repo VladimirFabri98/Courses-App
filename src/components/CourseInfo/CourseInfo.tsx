@@ -2,7 +2,7 @@ import Button from "../../common/Button/Button";
 import formatCreationDate from "../../helpers/formatCreationDate";
 import getCourseDuration from "../../helpers/getCourseDuration";
 import "./CourseInfo.css";
-import { Author, Course } from "../Courses/components/CourseCard/CourseCard";
+import { Author, Course } from "../../types";
 import getAuthorNames from "../../helpers/getAuthorNames";
 
 type CourseInfoProps = {
@@ -40,7 +40,7 @@ export default function CourseInfo({ courses, authors }: CourseInfoProps) {
                     </div>
                 </div>
             </div>
-            <Button buttonText="Back" />
+            <Button>Back</Button>
         </section>
     );
 }

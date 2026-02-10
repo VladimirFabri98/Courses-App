@@ -8,7 +8,7 @@ function App() {
     return (
         <>
             <Header />
-            {mockedCoursesList.length !== 0 ? (
+            {mockedCoursesList.length ? (
                 <Courses
                     mockedCoursesList={mockedCoursesList}
                     mockedAuthorsList={mockedAuthorsList}

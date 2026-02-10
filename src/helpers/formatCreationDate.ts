@@ -1,8 +1,8 @@
-function formatCreationDate(date: string): string | null {
+function formatCreationDate(date: string): string {
     if (!date) return "";
     const parts = date.split("/");
 
-    if (parts.length !== 3) return null;
+    if (parts.length !== 3) return "";
 
     const [dayStr, monthStr, yearStr] = parts;
 
@@ -15,7 +15,7 @@ function formatCreationDate(date: string): string | null {
         !Number.isInteger(month) ||
         !Number.isInteger(year)
     ) {
-        return null;
+        return "";
     }
 
     const formattedDate = new Date(year, month - 1, day);

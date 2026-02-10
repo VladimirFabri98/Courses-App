@@ -1,5 +1,5 @@
 function getCourseDuration(duration: number): string {
-    if (!duration) return "";
+    if (!duration && duration !== 0) return "";
     let hours: string | number = Math.trunc(duration / 60);
     let minutes: string | number = Math.trunc(duration % 60);
     const singularOrPlural = hours !== 1 ? "hours" : "hour";

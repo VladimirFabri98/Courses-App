@@ -3,20 +3,7 @@ import "./CourseCard.css";
 import getCourseDuration from "../../../../helpers/getCourseDuration";
 import formatCreationDate from "../../../../helpers/formatCreationDate";
 import getAuthorNames from "../../../../helpers/getAuthorNames";
-
-export type Author = {
-    id: string;
-    name: string;
-};
-
-export type Course = {
-    id: string;
-    title: string;
-    description: string;
-    creationDate: string;
-    duration: number;
-    authors: string[];
-};
+import { Author, Course } from "../../../../types";
 
 type CourseCardProps = {
     readonly course: Course;
@@ -44,7 +31,7 @@ export default function CourseCard({ course, authors }: CourseCardProps) {
                             {formatCreationDate(course.creationDate)}
                         </p>
                     </div>
-                    <Button buttonText="Show Course" />
+                    <Button>Show Course</Button>
                 </div>
             </div>
         </li>

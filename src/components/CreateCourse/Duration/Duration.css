@@ -1,0 +1,22 @@
+.duration-title {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
+}
+
+.duration-container {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.duration-container input {
+    min-width: 400px;
+}
+
+.duration-hours {
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0;
+    padding-bottom: 4px;
+}

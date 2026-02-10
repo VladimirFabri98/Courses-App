@@ -7,7 +7,7 @@ export default function Header() {
     return (
         <header className="header">
             <Logo imgSrc={logo} />
-            <Button buttonText="Login" />
+            <Button>Login</Button>
         </header>
     );
 }
