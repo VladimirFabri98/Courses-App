@@ -22,11 +22,11 @@ function CreateCourse({ onCreateCourse, onUpdateAuthors }: CreateCourseProps) {
     const [formValid, setFormValid] = useState(true);
 
     function handleTitleChange(value: string) {
-        setTitle(value);
+        setTitle(value.trimStart());
     }
 
     function handleDescriptionChange(value: string) {
-        setDescription(value);
+        setDescription(value.trimStart());
     }
 
     function handleDurationChange(value: number) {

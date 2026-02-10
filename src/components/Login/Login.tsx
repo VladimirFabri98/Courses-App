@@ -9,10 +9,10 @@ export default function Login() {
     const [formValid, setFormValid] = useState(true);
 
     function handleEmailChange(email: string): void {
-        setEmail(email);
+        setEmail(email.trimStart());
     }
     function handlePasswordChange(password: string): void {
-        setPassword(password);
+        setPassword(password.trimStart());
     }
 
     function validateLoginForm(e: React.FormEvent): void {

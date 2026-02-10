@@ -10,13 +10,13 @@ export default function Registration() {
     const [formValid, setFormValid] = useState(true);
 
     function handleNameChange(name: string): void {
-        setName(name);
+        setName(name.trimStart());
     }
     function handleEmailChange(email: string): void {
-        setEmail(email);
+        setEmail(email.trimStart());
     }
     function handlePasswordChange(password: string): void {
-        setPassword(password);
+        setPassword(password.trimStart());
     }
 
     function validateRegistrationForm(e: React.FormEvent): void {

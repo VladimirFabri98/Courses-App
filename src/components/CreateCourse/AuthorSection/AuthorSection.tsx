@@ -25,7 +25,7 @@ export default function AuthorSection({
     const [isValidInput, setIsValidInput] = useState(true);
 
     function onAuthorNameChange(value: string) {
-        setAuthorName(value);
+        setAuthorName(value.trimStart());
     }
 
     function handleAddingNewAuthor(): void {
