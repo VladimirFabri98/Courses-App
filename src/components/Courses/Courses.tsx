@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { Author, Course } from "../../types";
 import CreateCourse from "../CreateCourse/CreateCourse";
-import Login from "../Login/Login";
-import Registration from "../Registration/Registration";
 import CourseCard from "./components/CourseCard/CourseCard";
 import Utilities from "./components/Utilities/Utilities";
 import "./Courses.css";
@@ -73,8 +71,6 @@ export default function Courses({
                 onCreateCourse={handleCourseListChange}
                 onUpdateAuthors={handleAuthorsListChange}
             />
-            <Login />
-            <Registration />
         </main>
     );
 }

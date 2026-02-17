@@ -1,6 +1,6 @@
 import Button from "../../../common/Button/Button";
 import Input from "../../../common/Input/Input";
-import AuthorItem from "../../AuthorItem/AuthorItem";
+import AuthorItem from "../AuthorItem/AuthorItem";
 import "./AuthorSection.css";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";

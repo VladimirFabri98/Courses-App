@@ -2,11 +2,14 @@ import { useState } from "react";
 import Button from "../../common/Button/Button";
 import Input from "../../common/Input/Input";
 import "./Login.css";
+import { Link, useNavigate } from "react-router-dom";
+import { emailValidation } from "@/helpers/validateEmail";
+import { postRequest } from "@/helpers/postRequest";
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [formValid, setFormValid] = useState(true);
+    const navigate = useNavigate();
 
     function handleEmailChange(email: string): void {
         setEmail(email.trimStart());
@@ -15,13 +18,24 @@ export default function Login() {
         setPassword(password.trimStart());
     }
 
-    function validateLoginForm(e: React.FormEvent): void {
+    async function validateLoginForm(e: React.FormEvent) {
         e.preventDefault();
-        email && password ? setFormValid(true) : setFormValid(false);
+        if (!emailValidation(email) || password.trim().length < 2) return;
+
+        const loginValue = { email: email, password: password };
+        const requestResult = await postRequest(
+            "http://localhost:4000/login",
+            loginValue
+        );
+        if (!requestResult?.successful) return;
+        setTimeout(() => {
+            localStorage.setItem("token", requestResult.result);
+            navigate("/courses");
+        }, 2000);
     }
 
     return (
-        <>
+        <div className="login-main">
             <h3 className="login-title">Login</h3>
             <div id="login" className="login-form-container">
                 <form
@@ -36,7 +50,7 @@ export default function Login() {
                         required={true}
                         inputType="email"
                         value={email}
-                        valid={formValid}
+                        valid={email ? true : false}
                         onChange={handleEmailChange}
                     />
                     <Input
@@ -46,17 +60,17 @@ export default function Login() {
                         required={true}
                         inputType="password"
                         value={password}
-                        valid={formValid}
+                        valid={password ? true : false}
                         onChange={handlePasswordChange}
                     />
                     <Button type="submit">Login</Button>
                     <p className="login-alternate-login">
                         If you don't have an account you may
                         <br></br>
-                        <a href="#registration">Registration</a>
+                        <Link to={"/registration"}>Register</Link>
                     </p>
                 </form>
             </div>
-        </>
+        </div>
     );
 }

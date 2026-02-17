@@ -1,4 +1,6 @@
+import { useState } from "react";
 import "./Input.css";
+import { emailValidation } from "@/helpers/validateEmail";
 
 type inputProps = {
     readonly labelText: string;
@@ -29,7 +31,7 @@ export default function Input({
     multiline,
     hasWarning,
 }: inputProps) {
-    let initialValue = true;
+    const [initialValue, setInitialValue] = useState(true);
 
     return (
         <label className="input-component--label">
@@ -45,14 +47,20 @@ export default function Input({
                     required={required}
                     placeholder={placeholderText}
                     style={
-                        (value || initialValue) && (valid || value)
+                        (value || initialValue) &&
+                        (valid || initialValue) &&
+                        (inputType === "email" &&
+                        !emailValidation(String(value)) &&
+                        String(value).length != 0
+                            ? false
+                            : true)
                             ? { borderColor: "#cfcfcf" }
                             : { borderColor: "#ff0000" }
                     }
                     value={value}
                     onChange={(e) => {
                         onChange(e.target.value);
-                        initialValue && (initialValue = false);
+                        initialValue && setInitialValue(false);
                     }}
                 ></input>
             ) : (
@@ -64,20 +72,34 @@ export default function Input({
                     required={required}
                     placeholder={placeholderText}
                     style={
-                        (value || initialValue) && (valid || value)
+                        (value || initialValue) && (valid || initialValue)
                             ? { borderColor: "#cfcfcf" }
                             : { borderColor: "#ff0000" }
                     }
                     value={value}
                     onChange={(e) => {
                         onChange(e.target.value);
-                        initialValue && (initialValue = false);
+                        initialValue && setInitialValue(false);
                     }}
                 ></textarea>
             )}
-            {!((value || initialValue) && (valid || value) && !hasWarning) && (
-                <p className="input-component--invalid-input-message">{`${inputName} is required.`}</p>
+            {!(
+                (value || initialValue) &&
+                (valid || initialValue) &&
+                !hasWarning
+            ) && (
+                <p className="input-component--invalid-input-message">
+                    {`${inputName} is required`}
+                </p>
             )}
+
+            {inputType === "email" &&
+                !emailValidation(String(value)) &&
+                String(value).length != 0 && (
+                    <p className="input-component--invalid-input-message">
+                        {`Mandatory format: example@provider.com`}
+                    </p>
+                )}
         </label>
     );
 }

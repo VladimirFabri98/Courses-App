@@ -1,8 +1,8 @@
 import "./AuthorItem.css";
-import Button from "../../common/Button/Button";
-import addIcon from "../../assets/add.svg";
-import deleteIcon from "../../assets/trash.svg";
-import { Author } from "../../types";
+import Button from "../../../common/Button/Button";
+import addIcon from "../../../assets/add.svg";
+import deleteIcon from "../../../assets/trash.svg";
+import { Author } from "../../../types";
 
 type AuthorItemProps = {
     readonly author: Author;

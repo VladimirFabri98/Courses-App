@@ -2,12 +2,16 @@ import { useState } from "react";
 import Button from "../../common/Button/Button";
 import Input from "../../common/Input/Input";
 import "./Registration.css";
+import { emailValidation } from "@/helpers/validateEmail";
+import { postRequest } from "@/helpers/postRequest";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Registration() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [formValid, setFormValid] = useState(true);
+    const [success, setSucces] = useState(0);
+    const navigate = useNavigate();
 
     function handleNameChange(name: string): void {
         setName(name.trimStart());
@@ -19,13 +23,30 @@ export default function Registration() {
         setPassword(password.trimStart());
     }
 
-    function validateRegistrationForm(e: React.FormEvent): void {
+    async function validateRegistrationForm(e: React.FormEvent) {
         e.preventDefault();
-        name && email && password ? setFormValid(true) : setFormValid(false);
+        if (
+            !emailValidation(email) ||
+            name.trim().length < 2 ||
+            password.trim().length < 2
+        )
+            return;
+
+        const newUser = { name: name, email: email, password: password };
+        const requestResult = await postRequest(
+            "http://localhost:4000/register",
+            newUser
+        );
+
+        if (!requestResult?.successful) setSucces(2);
+        setSucces(1);
+        setTimeout(() => {
+            navigate("/login");
+        }, 2000);
     }
 
     return (
-        <>
+        <div className="registration-main">
             <h3 className="registration-title">Registration</h3>
             <div id="registration" className="registration-form-container">
                 <form
@@ -39,7 +60,7 @@ export default function Registration() {
                         placeholderText="Input text"
                         required={true}
                         value={name}
-                        valid={formValid}
+                        valid={name ? true : false}
                         onChange={handleNameChange}
                     />
                     <Input
@@ -49,7 +70,7 @@ export default function Registration() {
                         required={true}
                         inputType="email"
                         value={email}
-                        valid={formValid}
+                        valid={email ? true : false}
                         onChange={handleEmailChange}
                     />
                     <Input
@@ -59,16 +80,26 @@ export default function Registration() {
                         required={true}
                         inputType="password"
                         value={password}
-                        valid={formValid}
+                        valid={password ? true : false}
                         onChange={handlePasswordChange}
                     />
                     <Button type="submit">Register</Button>
                     <p className="registration-alternate-login">
                         If you have an account you may{" "}
-                        <a href="#login">Login</a>
+                        <Link to={"/login"}>Login</Link>
                     </p>
                 </form>
+                {success == 1 && (
+                    <p className="registration--result-message">
+                        User with an email: {email} successfully registered!
+                    </p>
+                )}
+                {success == 2 && (
+                    <p className="registration--result-message">
+                        Registration failed!
+                    </p>
+                )}
             </div>
-        </>
+        </div>
     );
 }
