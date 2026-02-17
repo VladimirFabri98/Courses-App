@@ -1,0 +1,64 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background-color: #fff;
+    padding: 11px 57px 35px 31px;
+
+    border-radius: 8px;
+    border-left: 7px solid #333e48;
+    box-shadow: 6px 0 15px rgba(0, 0, 0, 0.15);
+}
+
+.card-content {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+
+.title {
+    padding: 10px 10px 10px 0;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 32px;
+    color: #000;
+    margin: 0;
+
+    align-self: flex-start;
+}
+
+.card-description {
+    width: 70%;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+    color: #333e48;
+}
+
+.info-section {
+    display: flex;
+    flex-direction: column;
+    gap: 31px;
+    align-items: flex-start;
+}
+
+.info-section Button {
+    font-size: 16px;
+    line-height: 24px;
+    min-width: 180px;
+}
+
+.info-section p {
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+    color: #333e48;
+}
+
+.course-author {
+    max-width: 310px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

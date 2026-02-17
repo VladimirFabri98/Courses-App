@@ -1,0 +1,14 @@
+.author-item {
+    display: flex;
+    gap: 20px;
+}
+
+.author-name {
+    min-width: 150px;
+}
+
+.author-item button {
+    width: auto;
+    height: auto;
+    background-color: transparent;
+}

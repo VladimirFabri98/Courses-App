@@ -13,12 +13,12 @@ If no token is found in `localStorage`, the user is automatically redirected to 
 ### Component
 
 ```tsx
-import { FC } from 'react';
-import { Navigate } from 'react-router-dom';
+import { FC } from "react";
+import { Navigate } from "react-router-dom";
 
 const PrivateRoute: FC<{ children: React.ReactNode }> = ({ children }) => {
-  const token = localStorage.getItem('token');
-  return token ? <>{children}</> : <Navigate to="/login" replace />;
+    const token = localStorage.getItem("token");
+    return token ? <>{children}</> : <Navigate to="/login" replace />;
 };
 
 export default PrivateRoute;
@@ -28,11 +28,11 @@ export default PrivateRoute;
 
 ```tsx
 <Route
-  path="/courses"
-  element={
-    <PrivateRoute>
-      <Courses />
-    </PrivateRoute>
-  }
+    path="/courses"
+    element={
+        <PrivateRoute>
+            <Courses />
+        </PrivateRoute>
+    }
 />
 ```
