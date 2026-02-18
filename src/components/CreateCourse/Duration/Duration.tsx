@@ -25,6 +25,7 @@ export default function Duration({
                     placeholderText="Input text"
                     required={true}
                     valid={formValid}
+                    formvalid={formValid}
                     value={duration}
                     onChange={handleDurationChange}
                     inputType="number"

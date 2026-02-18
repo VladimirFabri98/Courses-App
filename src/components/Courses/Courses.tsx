@@ -1,38 +1,22 @@
-import { useState } from "react";
 import { Author, Course } from "../../types";
-import CreateCourse from "../CreateCourse/CreateCourse";
 import CourseCard from "./components/CourseCard/CourseCard";
 import Utilities from "./components/Utilities/Utilities";
 import "./Courses.css";
 
 type CoursesProps = {
-    readonly mockedCoursesList: Course[];
-    readonly mockedAuthorsList: Author[];
+    readonly courseList: Course[];
+    readonly authorsList: Author[];
+    readonly handleSetCourseList: (
+        courseList?: Course[],
+        isSearch?: boolean
+    ) => void;
 };
 
 export default function Courses({
-    mockedCoursesList,
-    mockedAuthorsList,
+    courseList,
+    authorsList,
+    handleSetCourseList,
 }: CoursesProps) {
-    const [courseList, setCourseList] = useState<Course[]>(mockedCoursesList);
-    const [authorsList, setAuthorsList] = useState<Author[]>(mockedAuthorsList);
-
-    function handleCourseListChange(course: Course) {
-        setCourseList([...courseList, course]);
-    }
-
-    function handleAuthorsListChange(authors: Author[]) {
-        const seen = new Set<string>();
-
-        const merged = [...authorsList, ...authors].filter((item) => {
-            if (seen.has(item.id)) return false;
-            seen.add(item.id);
-            return true;
-        });
-
-        setAuthorsList(merged);
-    }
-
     function handleSearch(searchString: string) {
         const filteredCourses = courseList.filter((course) => {
             if (
@@ -43,11 +27,11 @@ export default function Courses({
             )
                 return course;
         });
-        setCourseList([...filteredCourses]);
+        handleSetCourseList(filteredCourses, true);
     }
 
     function handleSearchCleared() {
-        setCourseList([...mockedCoursesList]);
+        handleSetCourseList(undefined, false);
     }
 
     return (
@@ -67,10 +51,6 @@ export default function Courses({
                     );
                 })}
             </ul>
-            <CreateCourse
-                onCreateCourse={handleCourseListChange}
-                onUpdateAuthors={handleAuthorsListChange}
-            />
         </main>
     );
 }

@@ -9,6 +9,7 @@ type inputProps = {
     readonly value: string | number;
     readonly required: boolean;
     readonly valid: boolean;
+    readonly formvalid?: boolean;
     readonly onChange: (value: any) => void;
     readonly inputType?: string;
     readonly minLength?: number;
@@ -24,12 +25,13 @@ export default function Input({
     value,
     onChange,
     valid,
+    formvalid = true,
     required,
     inputType,
     minLength,
     minValue = 0,
     multiline,
-    hasWarning,
+    hasWarning = true,
 }: inputProps) {
     const [initialValue, setInitialValue] = useState(true);
 
@@ -47,15 +49,18 @@ export default function Input({
                     required={required}
                     placeholder={placeholderText}
                     style={
-                        (value || initialValue) &&
-                        (valid || initialValue) &&
-                        (inputType === "email" &&
-                        !emailValidation(String(value)) &&
-                        String(value).length != 0
-                            ? false
-                            : true)
-                            ? { borderColor: "#cfcfcf" }
-                            : { borderColor: "#ff0000" }
+                        !hasWarning
+                            ? undefined
+                            : (value || initialValue) &&
+                                (valid || initialValue) &&
+                                (value || formvalid) &&
+                                (inputType === "email" &&
+                                !emailValidation(String(value)) &&
+                                String(value).length != 0
+                                    ? false
+                                    : true)
+                              ? { borderColor: "#cfcfcf" }
+                              : { borderColor: "#ff0000" }
                     }
                     value={value}
                     onChange={(e) => {
@@ -72,7 +77,9 @@ export default function Input({
                     required={required}
                     placeholder={placeholderText}
                     style={
-                        (value || initialValue) && (valid || initialValue)
+                        (value || initialValue) &&
+                        (valid || initialValue) &&
+                        (value || formvalid)
                             ? { borderColor: "#cfcfcf" }
                             : { borderColor: "#ff0000" }
                     }
@@ -83,15 +90,17 @@ export default function Input({
                     }}
                 ></textarea>
             )}
-            {!(
-                (value || initialValue) &&
-                (valid || initialValue) &&
-                !hasWarning
-            ) && (
-                <p className="input-component--invalid-input-message">
-                    {`${inputName} is required`}
-                </p>
-            )}
+            {!hasWarning
+                ? null
+                : !(
+                      (value || initialValue) &&
+                      (valid || initialValue) &&
+                      (valid || formvalid)
+                  ) && (
+                      <p className="input-component--invalid-input-message">
+                          {`${inputName} is required`}
+                      </p>
+                  )}
 
             {inputType === "email" &&
                 !emailValidation(String(value)) &&

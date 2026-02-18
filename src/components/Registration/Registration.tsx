@@ -11,6 +11,7 @@ export default function Registration() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [success, setSucces] = useState(0);
+    const [formValid, setFormValid] = useState(true);
     const navigate = useNavigate();
 
     function handleNameChange(name: string): void {
@@ -29,9 +30,12 @@ export default function Registration() {
             !emailValidation(email) ||
             name.trim().length < 2 ||
             password.trim().length < 2
-        )
+        ) {
+            setFormValid(false);
             return;
+        }
 
+        setFormValid(true);
         const newUser = { name: name, email: email, password: password };
         const requestResult = await postRequest(
             "http://localhost:4000/register",
@@ -61,6 +65,7 @@ export default function Registration() {
                         required={true}
                         value={name}
                         valid={name ? true : false}
+                        formvalid={formValid}
                         onChange={handleNameChange}
                     />
                     <Input
@@ -71,6 +76,7 @@ export default function Registration() {
                         inputType="email"
                         value={email}
                         valid={email ? true : false}
+                        formvalid={formValid}
                         onChange={handleEmailChange}
                     />
                     <Input
@@ -81,6 +87,7 @@ export default function Registration() {
                         inputType="password"
                         value={password}
                         valid={password ? true : false}
+                        formvalid={formValid}
                         onChange={handlePasswordChange}
                     />
                     <Button type="submit">Register</Button>

@@ -14,12 +14,15 @@ function AuthorItem({ author, onButtonClick, adding }: AuthorItemProps) {
     return (
         <li className="author-item">
             <p className="author-name">{author.name}</p>
-            <Button onClick={adding ? onButtonClick : () => {}}>
-                <img src={addIcon} alt="Add author"></img>
-            </Button>
-            <Button onClick={!adding ? onButtonClick : () => {}}>
-                <img src={deleteIcon} alt="Delete author"></img>
-            </Button>
+            {adding ? (
+                <Button onClick={onButtonClick}>
+                    <img src={addIcon} alt="Add author"></img>
+                </Button>
+            ) : (
+                <Button onClick={onButtonClick}>
+                    <img src={deleteIcon} alt="Delete author"></img>
+                </Button>
+            )}
         </li>
     );
 }

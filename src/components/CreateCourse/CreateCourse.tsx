@@ -6,20 +6,26 @@ import Duration from "./Duration/Duration";
 import AuthorSection from "./AuthorSection/AuthorSection";
 import { Author, Course } from "../../types";
 import { v4 as uuidv4 } from "uuid";
-import { mockedAuthorsList } from "../../mockedData";
+import { useNavigate } from "react-router-dom";
 
 type CreateCourseProps = {
     readonly onCreateCourse: (course: Course) => void;
     readonly onUpdateAuthors: (authors: Author[]) => void;
+    readonly currentAuthorsList: Author[];
 };
 
-function CreateCourse({ onCreateCourse, onUpdateAuthors }: CreateCourseProps) {
+function CreateCourse({
+    onCreateCourse,
+    onUpdateAuthors,
+    currentAuthorsList,
+}: CreateCourseProps) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [duration, setDuration] = useState(0);
     const [courseAuthorsList, setCourseAuthorsList] = useState<Author[]>([]);
-    const [authorsList, setAuthorsList] = useState(mockedAuthorsList);
+    const [authorsList, setAuthorsList] = useState(currentAuthorsList);
     const [formValid, setFormValid] = useState(true);
+    const navigate = useNavigate();
 
     function handleTitleChange(value: string) {
         setTitle(value.trimStart());
@@ -58,17 +64,18 @@ function CreateCourse({ onCreateCourse, onUpdateAuthors }: CreateCourseProps) {
     function validateCreationForm(e: React.FormEvent) {
         e.preventDefault();
         if (
-            title.trim().length >= 2 &&
-            description.trim().length >= 2 &&
-            duration > 0
+            !(
+                title.trim().length >= 2 &&
+                description.trim().length >= 2 &&
+                duration > 0
+            )
         ) {
-            setFormValid(true);
-
-            createNewCourse();
-            clearAllFields();
-        } else {
-            setFormValid(false);
+            formValid && setFormValid(false);
+            return;
         }
+
+        !formValid && setFormValid(true);
+        createNewCourse();
     }
 
     function createNewCourse() {
@@ -83,6 +90,11 @@ function CreateCourse({ onCreateCourse, onUpdateAuthors }: CreateCourseProps) {
         };
         onCreateCourse(newCourse);
         onUpdateAuthors(courseAuthorsList);
+
+        setTimeout(() => {
+            navigate("/courses");
+            clearAllFields();
+        }, 1000);
     }
 
     function getCourseAuthors(): Author[] {
@@ -91,6 +103,10 @@ function CreateCourse({ onCreateCourse, onUpdateAuthors }: CreateCourseProps) {
 
     function getAuthorsList(): Author[] {
         return authorsList;
+    }
+
+    function onCancel() {
+        navigate("/courses");
     }
 
     return (
@@ -111,8 +127,9 @@ function CreateCourse({ onCreateCourse, onUpdateAuthors }: CreateCourseProps) {
                         inputName="Title"
                         placeholderText="Input text"
                         required={true}
-                        valid={formValid}
+                        valid={title ? true : false}
                         value={title}
+                        formvalid={formValid}
                         onChange={handleTitleChange}
                         minLength={2}
                     />
@@ -121,7 +138,8 @@ function CreateCourse({ onCreateCourse, onUpdateAuthors }: CreateCourseProps) {
                         inputName="Description"
                         placeholderText="Input text"
                         required={true}
-                        valid={formValid}
+                        valid={description ? true : false}
+                        formvalid={formValid}
                         value={description}
                         onChange={handleDescriptionChange}
                         minLength={2}
@@ -129,7 +147,7 @@ function CreateCourse({ onCreateCourse, onUpdateAuthors }: CreateCourseProps) {
                     />
                     <Duration
                         duration={duration}
-                        formValid={formValid}
+                        formValid={duration || formValid ? true : false}
                         handleDurationChange={handleDurationChange}
                     />
                     <AuthorSection
@@ -141,7 +159,7 @@ function CreateCourse({ onCreateCourse, onUpdateAuthors }: CreateCourseProps) {
                     />
                 </form>
                 <div className="create-course--button-container">
-                    <Button>Cancel</Button>
+                    <Button onClick={onCancel}>Cancel</Button>
                     <Button type="submit" form="create-course-form">
                         Create Course
                     </Button>

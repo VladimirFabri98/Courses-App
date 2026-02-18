@@ -20,3 +20,8 @@ body {
         "Helvetica Neue",
         sans-serif;
 }
+
+header .button {
+    margin-top: 0px;
+    align-self: center;
+}
