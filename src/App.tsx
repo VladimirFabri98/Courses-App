@@ -1,7 +1,7 @@
 import Courses from "./components/Courses/Courses.tsx";
 import { mockedCoursesList, mockedAuthorsList } from "./mockedData.ts";
 import "./App.css";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Registration from "./components/Registration/Registration.tsx";
 import Login from "./components/Login/Login.tsx";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute.tsx";
@@ -18,7 +18,6 @@ function App() {
     const [loggedIn, setLoggedIn] = useState<boolean>(
         !!localStorage.getItem("token")
     );
-    const location = useLocation();
 
     function onLogInChange(loggedIn: boolean) {
         setLoggedIn(loggedIn);
@@ -52,9 +51,7 @@ function App() {
 
     return (
         <>
-            {!["/login", "/registration"].includes(location.pathname) && (
-                <Header loggedIn={loggedIn} setLoggedInState={onLogInChange} />
-            )}
+            {<Header loggedIn={loggedIn} setLoggedInState={onLogInChange} />}
 
             <Routes>
                 <Route path="/registration" element={<Registration />} />

@@ -2,7 +2,7 @@ import Button from "../../common/Button/Button";
 import Logo from "./components/Logo/Logo";
 import logo from "../../assets/header-logo.svg";
 import "./Header.css";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 type HeaderProps = {
     readonly loggedIn: boolean;
@@ -11,6 +11,7 @@ type HeaderProps = {
 
 export default function Header({ loggedIn, setLoggedInState }: HeaderProps) {
     const navigate = useNavigate();
+    const location = useLocation();
 
     function onButtonClick() {
         if (loggedIn) {
@@ -26,17 +27,19 @@ export default function Header({ loggedIn, setLoggedInState }: HeaderProps) {
         <header className="header">
             <Logo imgSrc={logo} />
 
-            <div className="header-actions">
-                {loggedIn && (
-                    <p className="header-name">
-                        {localStorage.getItem("name")}
-                    </p>
-                )}
+            {!["/login", "/registration"].includes(location.pathname) && (
+                <div className="header-actions">
+                    {loggedIn && (
+                        <p className="header-name">
+                            {localStorage.getItem("name")}
+                        </p>
+                    )}
 
-                <Button onClick={onButtonClick}>
-                    {loggedIn ? `Logout` : `Login`}
-                </Button>
-            </div>
+                    <Button onClick={onButtonClick}>
+                        {loggedIn ? `Logout` : `Login`}
+                    </Button>
+                </div>
+            )}
         </header>
     );
 }
