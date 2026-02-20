@@ -4,6 +4,7 @@ import getCourseDuration from "../../../../helpers/getCourseDuration";
 import formatCreationDate from "../../../../helpers/formatCreationDate";
 import getAuthorNames from "../../../../helpers/getAuthorNames";
 import { Author, Course } from "../../../../types";
+import { useNavigate } from "react-router-dom";
 
 type CourseCardProps = {
     readonly course: Course;
@@ -11,6 +12,11 @@ type CourseCardProps = {
 };
 
 export default function CourseCard({ course, authors }: CourseCardProps) {
+    const navigate = useNavigate();
+    function onShowCourse(id: string) {
+        navigate(`/courses/${id}`);
+    }
+
     return (
         <li className="card">
             <h3 className="title">{course.title}</h3>
@@ -31,7 +37,13 @@ export default function CourseCard({ course, authors }: CourseCardProps) {
                             {formatCreationDate(course.creationDate)}
                         </p>
                     </div>
-                    <Button>Show Course</Button>
+                    <Button
+                        onClick={() => {
+                            onShowCourse(course.id);
+                        }}
+                    >
+                        Show Course
+                    </Button>
                 </div>
             </div>
         </li>

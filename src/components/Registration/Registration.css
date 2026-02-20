@@ -1,3 +1,11 @@
+.registration-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 33px;
+    margin: 71px auto;
+}
+
 .registration-title {
     font-weight: 700;
     font-size: 32px;
@@ -32,4 +40,10 @@
 
 .registration-form Button {
     width: 100%;
+}
+
+.registration--result-message {
+    font-weight: 700;
+    color: green;
+    margin-top: 12px;
 }

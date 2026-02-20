@@ -1,6 +1,6 @@
 import Button from "../../../common/Button/Button";
 import Input from "../../../common/Input/Input";
-import AuthorItem from "../../AuthorItem/AuthorItem";
+import AuthorItem from "../AuthorItem/AuthorItem";
 import "./AuthorSection.css";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
@@ -22,7 +22,7 @@ export default function AuthorSection({
     updateAuthorsList,
 }: AuthorSectionProps) {
     const [authorName, setAuthorName] = useState("");
-    const [isValidInput, setIsValidInput] = useState(true);
+    const [formValid, setFormValid] = useState(true);
 
     function onAuthorNameChange(value: string) {
         setAuthorName(value.trimStart());
@@ -30,15 +30,16 @@ export default function AuthorSection({
 
     function handleAddingNewAuthor(): void {
         if (!(authorName.trim().length >= 2)) {
-            setIsValidInput(false);
-        } else {
-            setIsValidInput(true);
-            const newAuthorId = uuidv4();
-            const newAuthor = { id: newAuthorId, name: authorName };
-            const newList = [...getAuthorsList(), newAuthor];
-            onAuthorNameChange("");
-            updateAuthorsList(newList);
+            setFormValid(false);
+            return;
         }
+
+        setFormValid(true);
+        const newAuthorId = uuidv4();
+        const newAuthor = { id: newAuthorId, name: authorName };
+        const newList = [...getAuthorsList(), newAuthor];
+        onAuthorNameChange("");
+        updateAuthorsList(newList);
     }
 
     function onAddingFromListToCourses(authorId: string) {
@@ -72,7 +73,8 @@ export default function AuthorSection({
                         inputName="Author Name"
                         labelText="Author Name"
                         placeholderText="Input text"
-                        valid={isValidInput}
+                        valid={authorName ? true : false}
+                        formvalid={formValid}
                         required={false}
                         value={authorName}
                         onChange={onAuthorNameChange}

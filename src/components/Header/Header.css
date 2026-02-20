@@ -9,3 +9,17 @@
 
     background-color: #fff;
 }
+
+.header-actions {
+    display: flex;
+    gap: 26px;
+    align-items: center;
+}
+
+.header-actions .header-name {
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0;
+    font-weight: 600;
+    color: #333e48;
+}

@@ -1,4 +1,4 @@
-import { Author } from "../components/Courses/components/CourseCard/CourseCard";
+import { Author } from "@/types";
 
 export default function getAuthorNames(
     authorIds: string[],

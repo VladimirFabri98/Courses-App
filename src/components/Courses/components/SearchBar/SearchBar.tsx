@@ -40,7 +40,6 @@ export default function SearchBar({
                 value={searchText}
                 valid={true}
                 onChange={handleSearch}
-                hasWarning={false}
             />
             <Button onClick={() => onSearch(searchText)}>Search</Button>
         </div>

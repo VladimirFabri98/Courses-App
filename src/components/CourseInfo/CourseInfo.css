@@ -1,3 +1,86 @@
 .course-info-section {
     display: flex;
+    flex-direction: column;
+    gap: 23px;
+
+    max-width: 1200px;
+    width: 100%;
+    margin: 54px auto;
+}
+
+.course-info-section h3 {
+    align-self: flex-start;
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: 0;
+    font-weight: 700;
+    color: #333e48;
+}
+
+.course-info-container {
+    display: flex;
+    gap: 32px;
+    padding: 53px 64px;
+    border: 1px solid #cfcfcf;
+    background-color: #fff;
+}
+
+.course-info-description {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.course-info-description h4 {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 20px;
+    letter-spacing: 0;
+    color: #333e48;
+}
+
+.course-info-description p {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0;
+    color: #333e48;
+}
+
+.course-info-details {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.detail-subsection {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.detail-subsection p {
+    margin-left: auto;
+    color: #333e48;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+}
+
+.course-info--detail-subtitle {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 32px;
+    letter-spacing: 0;
+    color: #333e48;
+}
+
+.button {
+    margin-top: 23px;
+    align-self: flex-end;
+}
+
+.separator {
+    border: 0.5px solid #cfcfcf;
 }

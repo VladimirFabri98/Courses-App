@@ -1,4 +1,7 @@
+import { useState } from "react";
 import "./Input.css";
+import { emailValidation } from "@/helpers/validateEmail";
+import TextArea from "./TextArea/TextArea";
 
 type inputProps = {
     readonly labelText: string;
@@ -7,6 +10,7 @@ type inputProps = {
     readonly value: string | number;
     readonly required: boolean;
     readonly valid: boolean;
+    readonly formvalid?: boolean;
     readonly onChange: (value: any) => void;
     readonly inputType?: string;
     readonly minLength?: number;
@@ -22,14 +26,30 @@ export default function Input({
     value,
     onChange,
     valid,
+    formvalid = true,
     required,
     inputType,
     minLength,
     minValue = 0,
     multiline,
-    hasWarning,
+    hasWarning = true,
 }: inputProps) {
-    let initialValue = true;
+    const [initialValue, setInitialValue] = useState(true);
+    const emailCheck =
+        inputType === "email" &&
+        !emailValidation(String(value)) &&
+        String(value).length != 0;
+
+    const textErrorCondition = !(
+        (value || initialValue) &&
+        (valid || initialValue) &&
+        (valid || formvalid)
+    );
+
+    const colorErrorCondition =
+        (value || initialValue) &&
+        (valid || initialValue) &&
+        (valid || formvalid);
 
     return (
         <label className="input-component--label">
@@ -45,38 +65,39 @@ export default function Input({
                     required={required}
                     placeholder={placeholderText}
                     style={
-                        (value || initialValue) && (valid || value)
+                        hasWarning && colorErrorCondition && !emailCheck
                             ? { borderColor: "#cfcfcf" }
                             : { borderColor: "#ff0000" }
                     }
                     value={value}
                     onChange={(e) => {
                         onChange(e.target.value);
-                        initialValue && (initialValue = false);
+                        initialValue && setInitialValue(false);
                     }}
                 ></input>
             ) : (
-                <textarea
-                    className="input-component--textarea-field"
-                    minLength={minLength ? minLength : 0}
-                    name={inputName}
-                    autoComplete="on"
-                    required={required}
-                    placeholder={placeholderText}
-                    style={
-                        (value || initialValue) && (valid || value)
-                            ? { borderColor: "#cfcfcf" }
-                            : { borderColor: "#ff0000" }
-                    }
+                <TextArea
                     value={value}
-                    onChange={(e) => {
-                        onChange(e.target.value);
-                        initialValue && (initialValue = false);
-                    }}
-                ></textarea>
+                    colorErrorCondition={colorErrorCondition}
+                    initialValue={initialValue}
+                    inputName={inputName}
+                    minLength={minLength}
+                    placeholderText={placeholderText}
+                    required={required}
+                    onChange={onChange}
+                    handleInitialValueChange={setInitialValue}
+                />
             )}
-            {!((value || initialValue) && (valid || value) && !hasWarning) && (
-                <p className="input-component--invalid-input-message">{`${inputName} is required.`}</p>
+            {hasWarning && textErrorCondition && (
+                <p className="input-component--invalid-input-message">
+                    {`${inputName} is required`}
+                </p>
+            )}
+
+            {emailCheck && (
+                <p className="input-component--invalid-input-message">
+                    {`Mandatory format: example@provider.com`}
+                </p>
             )}
         </label>
     );
