@@ -5,6 +5,7 @@ import "./Registration.css";
 import { emailValidation } from "@/helpers/validateEmail";
 import { postRequest } from "@/helpers/postRequest";
 import { Link, useNavigate } from "react-router-dom";
+import { apiUrl } from "@/constants";
 
 export default function Registration() {
     const [name, setName] = useState("");
@@ -37,10 +38,7 @@ export default function Registration() {
 
         setFormValid(true);
         const newUser = { name: name, email: email, password: password };
-        const requestResult = await postRequest(
-            "http://localhost:4000/register",
-            newUser
-        );
+        const requestResult = await postRequest(`${apiUrl}/register`, newUser);
 
         if (!requestResult?.successful) setSucces(2);
         setSucces(1);

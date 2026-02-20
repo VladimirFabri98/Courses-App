@@ -29,15 +29,11 @@ export default function Header({ loggedIn, setLoggedInState }: HeaderProps) {
 
             {!["/login", "/registration"].includes(location.pathname) && (
                 <div className="header-actions">
-                    {loggedIn && (
-                        <p className="header-name">
-                            {localStorage.getItem("name")}
-                        </p>
-                    )}
+                    <p className="header-name">
+                        {localStorage.getItem("name")}
+                    </p>
 
-                    <Button onClick={onButtonClick}>
-                        {loggedIn ? `Logout` : `Login`}
-                    </Button>
+                    <Button onClick={onButtonClick}>Logout</Button>
                 </div>
             )}
         </header>

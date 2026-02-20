@@ -5,6 +5,7 @@ import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { emailValidation } from "@/helpers/validateEmail";
 import { postRequest } from "@/helpers/postRequest";
+import { apiUrl } from "../../constants";
 
 type LoginProps = {
     readonly changeLogginState: (value: boolean) => void;
@@ -32,17 +33,12 @@ export default function Login({ changeLogginState }: LoginProps) {
 
         setFormValid(true);
         const loginValue = { email: email, password: password };
-        const requestResult = await postRequest(
-            "http://localhost:4000/login",
-            loginValue
-        );
+        const requestResult = await postRequest(`${apiUrl}/login`, loginValue);
         if (!requestResult?.successful) return;
-        setTimeout(() => {
-            localStorage.setItem("token", requestResult.result);
-            localStorage.setItem("name", requestResult.user.name);
-            changeLogginState(true);
-            navigate("/courses");
-        }, 2000);
+        localStorage.setItem("token", requestResult.result);
+        localStorage.setItem("name", requestResult.user.name);
+        changeLogginState(true);
+        navigate("/courses");
     }
 
     return (

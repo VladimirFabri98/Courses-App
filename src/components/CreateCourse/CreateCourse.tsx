@@ -91,10 +91,8 @@ function CreateCourse({
         onCreateCourse(newCourse);
         onUpdateAuthors(courseAuthorsList);
 
-        setTimeout(() => {
-            navigate("/courses");
-            clearAllFields();
-        }, 1000);
+        navigate("/courses");
+        clearAllFields();
     }
 
     function getCourseAuthors(): Author[] {
