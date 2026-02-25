@@ -1,0 +1,11 @@
+.options-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+}
+
+.options-section Button {
+    min-width: 183px;
+    margin-top: 0px;
+}

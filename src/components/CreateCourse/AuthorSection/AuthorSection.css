@@ -1,0 +1,57 @@
+.author-section--container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.author-section--title {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 0;
+}
+
+.author-section--subtitle {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 20px;
+    letter-spacing: 0;
+}
+
+.author-section--authors-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.author-section--create-section {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.author-section--create-section input {
+    margin-bottom: 8px;
+    min-width: 400px;
+}
+
+.author-section--create-section button {
+    margin-top: 0px;
+    transform: translateY(4.5px);
+    min-width: 185px;
+    align-self: center;
+}
+
+.author-section--course-authors {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    min-width: 250px;
+}
+
+.author-section--no-authors {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0;
+}

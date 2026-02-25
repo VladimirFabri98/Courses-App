@@ -1,0 +1,41 @@
+import Button from "../../common/Button/Button";
+import Logo from "./components/Logo/Logo";
+import logo from "../../assets/header-logo.svg";
+import "./Header.css";
+import { useLocation, useNavigate } from "react-router-dom";
+
+type HeaderProps = {
+    readonly loggedIn: boolean;
+    readonly setLoggedInState: (value: boolean) => void;
+};
+
+export default function Header({ loggedIn, setLoggedInState }: HeaderProps) {
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    function onButtonClick() {
+        if (loggedIn) {
+            setLoggedInState(false);
+            localStorage.clear();
+            navigate("/login");
+        } else {
+            navigate("/login");
+        }
+    }
+
+    return (
+        <header className="header">
+            <Logo imgSrc={logo} />
+
+            {!["/login", "/registration"].includes(location.pathname) && (
+                <div className="header-actions">
+                    <p className="header-name">
+                        {localStorage.getItem("name")}
+                    </p>
+
+                    <Button onClick={onButtonClick}>Logout</Button>
+                </div>
+            )}
+        </header>
+    );
+}
