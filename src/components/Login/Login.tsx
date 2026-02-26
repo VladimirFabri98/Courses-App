@@ -6,16 +6,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { emailValidation } from "@/helpers/validateEmail";
 import { postRequest } from "@/helpers/postRequest";
 import { apiUrl } from "../../constants";
+import { useDispatch } from "react-redux";
+import { userLogin } from "@/store/user/userSlice";
 
-type LoginProps = {
-    readonly changeLogginState: (value: boolean) => void;
-};
-
-export default function Login({ changeLogginState }: LoginProps) {
+export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [formValid, setFormValid] = useState(true);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     function handleEmailChange(email: string): void {
         setEmail(email.trimStart());
@@ -36,8 +35,13 @@ export default function Login({ changeLogginState }: LoginProps) {
         const requestResult = await postRequest(`${apiUrl}/login`, loginValue);
         if (!requestResult?.successful) return;
         localStorage.setItem("token", requestResult.result);
-        localStorage.setItem("name", requestResult.user.name);
-        changeLogginState(true);
+        dispatch(
+            userLogin({
+                name: requestResult.user.name,
+                email: requestResult.user.email,
+                token: requestResult.result,
+            })
+        );
         navigate("/courses");
     }
 

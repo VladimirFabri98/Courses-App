@@ -5,24 +5,25 @@ import "./AuthorSection.css";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Author } from "../../../types";
+import { useDispatch, useSelector } from "react-redux";
+import { saveAuthor } from "@/store/authors/authorsSlice";
 
 type AuthorSectionProps = {
     readonly getCourseAuthors: () => Author[];
     readonly updateCourseAuthors: (authors: Author[]) => void;
     readonly addCourseAuthor: (author: Author) => void;
-    readonly getAuthorsList: () => Author[];
-    readonly updateAuthorsList: (authors: Author[]) => void;
 };
 
 export default function AuthorSection({
     getCourseAuthors,
     updateCourseAuthors,
     addCourseAuthor,
-    getAuthorsList,
-    updateAuthorsList,
 }: AuthorSectionProps) {
     const [authorName, setAuthorName] = useState("");
     const [formValid, setFormValid] = useState(true);
+    const { authorsData } = useSelector((state: any) => state.authorsSlice);
+    const [tempAuthorsList, setTempAuthorsList] = useState(authorsData);
+    const dispatch = useDispatch();
 
     function onAuthorNameChange(value: string) {
         setAuthorName(value.trimStart());
@@ -37,23 +38,23 @@ export default function AuthorSection({
         setFormValid(true);
         const newAuthorId = uuidv4();
         const newAuthor = { id: newAuthorId, name: authorName };
-        const newList = [...getAuthorsList(), newAuthor];
+        dispatch(saveAuthor(newAuthor));
+        setTempAuthorsList((prev: Author[]) => [...prev, newAuthor]);
         onAuthorNameChange("");
-        updateAuthorsList(newList);
     }
 
-    function onAddingFromListToCourses(authorId: string) {
-        const author = getAuthorsList().find((a) => a.id === authorId);
+    function onAddingFromListOfAuthorsToCourseAuthors(authorId: string) {
+        const author = tempAuthorsList.find((a: Author) => a.id === authorId);
         if (!author) return;
-
-        const updatedAuthorsList = getAuthorsList().filter(
-            (listAuthor) => listAuthor.id !== authorId
+        setTempAuthorsList(
+            tempAuthorsList.filter((author: Author) => {
+                return author.id !== authorId;
+            })
         );
-        updateAuthorsList(updatedAuthorsList);
         addCourseAuthor(author);
     }
 
-    function onRemovalFromList(authorId: string) {
+    function onRemovalFromCourseAuthors(authorId: string) {
         const author = getCourseAuthors().find((a) => a.id === authorId);
         if (!author) return;
 
@@ -61,7 +62,7 @@ export default function AuthorSection({
             (courseAuthor) => courseAuthor.id !== authorId
         );
         updateCourseAuthors(updatedCoursesList);
-        updateAuthorsList([...getAuthorsList(), author]);
+        setTempAuthorsList((prev: Author[]) => [...prev, author]);
     }
 
     return (
@@ -86,13 +87,15 @@ export default function AuthorSection({
                 </div>
                 <h5 className="author-section--subtitle">Authors List</h5>
                 <ul className="author-section--authors-list">
-                    {getAuthorsList().map((author) => (
+                    {tempAuthorsList.map((author: Author) => (
                         <AuthorItem
                             author={author}
                             adding={true}
                             key={author.id}
                             onButtonClick={() =>
-                                onAddingFromListToCourses(author.id)
+                                onAddingFromListOfAuthorsToCourseAuthors(
+                                    author.id
+                                )
                             }
                         />
                     ))}
@@ -108,7 +111,7 @@ export default function AuthorSection({
                                 adding={false}
                                 author={author}
                                 onButtonClick={() =>
-                                    onRemovalFromList(author.id)
+                                    onRemovalFromCourseAuthors(author.id)
                                 }
                             />
                         ))}
