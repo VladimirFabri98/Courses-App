@@ -12,12 +12,14 @@ type AuthorSectionProps = {
     readonly getCourseAuthors: () => Author[];
     readonly updateCourseAuthors: (authors: Author[]) => void;
     readonly addCourseAuthor: (author: Author) => void;
+    readonly isFormValid: boolean;
 };
 
 export default function AuthorSection({
     getCourseAuthors,
     updateCourseAuthors,
     addCourseAuthor,
+    isFormValid,
 }: AuthorSectionProps) {
     const [authorName, setAuthorName] = useState("");
     const [formValid, setFormValid] = useState(true);
@@ -77,6 +79,7 @@ export default function AuthorSection({
                         valid={authorName ? true : false}
                         formvalid={formValid}
                         required={false}
+                        hasWarning={false}
                         value={authorName}
                         onChange={onAuthorNameChange}
                         minLength={2}
@@ -117,9 +120,19 @@ export default function AuthorSection({
                         ))}
                     </ul>
                 ) : (
-                    <p className="author-section--no-authors">
-                        Author list is empty
-                    </p>
+                    <>
+                        <p className="author-section--no-authors">
+                            Author list is empty
+                        </p>
+                        {!isFormValid && (
+                            <p
+                                className="author-section--no-authors"
+                                style={{ color: "red" }}
+                            >
+                                Course requires an author!
+                            </p>
+                        )}
+                    </>
                 )}
             </div>
         </div>

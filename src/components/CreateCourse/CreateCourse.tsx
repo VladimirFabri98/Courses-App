@@ -47,7 +47,8 @@ function CreateCourse() {
             !(
                 title.trim().length >= 2 &&
                 description.trim().length >= 2 &&
-                duration > 0
+                duration > 0 &&
+                courseAuthorsList.length > 0
             )
         ) {
             formValid && setFormValid(false);
@@ -134,6 +135,7 @@ function CreateCourse() {
                         addCourseAuthor={handleAddingSingleCourseAuthor}
                         getCourseAuthors={getCourseAuthors}
                         updateCourseAuthors={handleCourseAuthorsListChange}
+                        isFormValid={formValid}
                     />
                 </form>
                 <div className="create-course--button-container">
