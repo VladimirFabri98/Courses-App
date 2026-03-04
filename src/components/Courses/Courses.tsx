@@ -5,18 +5,18 @@ import Utilities from "./components/Utilities/Utilities";
 import "./Courses.css";
 import { useEffect, useState } from "react";
 import { fetchCourses } from "@/store/courses/coursesSlice";
-import { useAppDispatch } from "@/store";
+import { RootState, useAppDispatch } from "@/store";
 import EmptyCourseList from "../EmptyCourseList/EmptyCourseList";
 import { fetchAuthors } from "@/store/authors/authorsSlice";
 
 export default function Courses() {
-    const [searchResult, setSearchResult] = useState([]);
+    const [searchResult, setSearchResult] = useState<Course[]>([]);
     const dispatch = useAppDispatch();
     const { courseData, status } = useSelector(
-        (state: any) => state.coursesSlice
+        (state: RootState) => state.coursesSlice
     );
     const { authorsData, authorsStatus } = useSelector(
-        (state: any) => state.authorsSlice
+        (state: RootState) => state.authorsSlice
     );
 
     useEffect(() => {

@@ -18,3 +18,8 @@ export type User = {
     email: string;
     token: string;
 };
+
+export type BackEndResponse<T = object> = {
+    successful: string;
+    result: T[];
+};

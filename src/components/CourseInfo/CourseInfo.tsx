@@ -6,12 +6,17 @@ import getAuthorNames from "../../helpers/getAuthorNames";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Course } from "@/types";
+import { RootState } from "@/store";
 
 export default function CourseInfo() {
     const params = useParams();
     const navigate = useNavigate();
-    const { courseData } = useSelector((state: any) => state.coursesSlice);
-    const { authorsData } = useSelector((state: any) => state.authorsSlice);
+    const { courseData } = useSelector(
+        (state: RootState) => state.coursesSlice
+    );
+    const { authorsData } = useSelector(
+        (state: RootState) => state.authorsSlice
+    );
 
     const course = courseData.find(
         (course: Course) => course.id === params.courseId

@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Author } from "../../../types";
 import { useDispatch, useSelector } from "react-redux";
 import { saveAuthor } from "@/store/authors/authorsSlice";
+import { RootState } from "@/store";
 
 type AuthorSectionProps = {
     readonly getCourseAuthors: () => Author[];
@@ -23,7 +24,9 @@ export default function AuthorSection({
 }: AuthorSectionProps) {
     const [authorName, setAuthorName] = useState("");
     const [formValid, setFormValid] = useState(true);
-    const { authorsData } = useSelector((state: any) => state.authorsSlice);
+    const { authorsData } = useSelector(
+        (state: RootState) => state.authorsSlice
+    );
     const [tempAuthorsList, setTempAuthorsList] = useState(authorsData);
     const dispatch = useDispatch();
 
