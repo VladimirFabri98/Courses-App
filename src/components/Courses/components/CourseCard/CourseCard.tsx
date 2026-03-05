@@ -5,6 +5,10 @@ import formatCreationDate from "../../../../helpers/formatCreationDate";
 import getAuthorNames from "../../../../helpers/getAuthorNames";
 import { Author, Course } from "../../../../types";
 import { useNavigate } from "react-router-dom";
+import deleteLogo from "./../../../../assets/course-card-trash.svg";
+import editCourse from "./../../../../assets/course-card-edit.svg";
+import { useDispatch } from "react-redux";
+import { deleteCourse } from "@/store/courses/coursesSlice";
 
 type CourseCardProps = {
     readonly course: Course;
@@ -13,6 +17,7 @@ type CourseCardProps = {
 
 export default function CourseCard({ course, authors }: CourseCardProps) {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     function onShowCourse(id: string) {
         navigate(`/courses/${id}`);
     }
@@ -37,13 +42,25 @@ export default function CourseCard({ course, authors }: CourseCardProps) {
                             {formatCreationDate(course.creationDate)}
                         </p>
                     </div>
-                    <Button
-                        onClick={() => {
-                            onShowCourse(course.id);
-                        }}
-                    >
-                        Show Course
-                    </Button>
+                    <div className="course-info-buttons">
+                        <Button
+                            onClick={() => {
+                                onShowCourse(course.id);
+                            }}
+                        >
+                            Show Course
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                dispatch(deleteCourse(course));
+                            }}
+                        >
+                            <img src={deleteLogo} alt="Delete course" />
+                        </Button>
+                        <Button>
+                            <img src={editCourse} alt="Edit course" />
+                        </Button>
+                    </div>
                 </div>
             </div>
         </li>

@@ -14,14 +14,16 @@ export default function Utilities({
 }: UtilitiesProps) {
     const navigate = useNavigate();
 
-    function onAddNewCourse() {
-        navigate("/courses/add");
-    }
-
     return (
         <section className="options-section">
             <SearchBar onSearch={onSearch} onSearchCleared={onSearchCleared} />
-            <Button onClick={onAddNewCourse}>Add new course</Button>
+            <Button
+                onClick={() => {
+                    navigate("/courses/add");
+                }}
+            >
+                Add new course
+            </Button>
         </section>
     );
 }

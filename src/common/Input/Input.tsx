@@ -65,9 +65,11 @@ export default function Input({
                     required={required}
                     placeholder={placeholderText}
                     style={
-                        hasWarning && colorErrorCondition && !emailCheck
+                        !hasWarning
                             ? { borderColor: "#cfcfcf" }
-                            : { borderColor: "#ff0000" }
+                            : colorErrorCondition && !emailCheck
+                              ? { borderColor: "#cfcfcf" }
+                              : { borderColor: "#ff0000" }
                     }
                     value={value}
                     onChange={(e) => {

@@ -11,3 +11,15 @@ export type Course = {
     duration: number;
     authors: string[];
 };
+
+export type User = {
+    isAuth: boolean;
+    name: string;
+    email: string;
+    token: string;
+};
+
+export type BackEndResponse<T = object> = {
+    successful: string;
+    result: T[];
+};

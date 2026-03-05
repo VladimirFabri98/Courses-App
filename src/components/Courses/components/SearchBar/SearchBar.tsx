@@ -38,6 +38,7 @@ export default function SearchBar({
                 placeholderText="Input text"
                 required={false}
                 value={searchText}
+                hasWarning={false}
                 valid={true}
                 onChange={handleSearch}
             />

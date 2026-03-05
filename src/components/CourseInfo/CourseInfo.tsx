@@ -4,20 +4,23 @@ import getCourseDuration from "../../helpers/getCourseDuration";
 import "./CourseInfo.css";
 import getAuthorNames from "../../helpers/getAuthorNames";
 import { useNavigate, useParams } from "react-router-dom";
-import { Author, Course } from "@/types";
+import { useSelector } from "react-redux";
+import { Course } from "@/types";
+import { RootState } from "@/store";
 
-type CourseInfoProps = {
-    readonly coursesList: Course[];
-    readonly authorsList: Author[];
-};
-
-export default function CourseInfo({
-    coursesList,
-    authorsList,
-}: CourseInfoProps) {
+export default function CourseInfo() {
     const params = useParams();
     const navigate = useNavigate();
-    const course = coursesList.find((course) => course.id === params.courseId);
+    const { courseData } = useSelector(
+        (state: RootState) => state.coursesSlice
+    );
+    const { authorsData } = useSelector(
+        (state: RootState) => state.authorsSlice
+    );
+
+    const course = courseData.find(
+        (course: Course) => course.id === params.courseId
+    );
 
     function onBack() {
         navigate("/courses");
@@ -54,7 +57,7 @@ export default function CourseInfo({
                             Authors:{" "}
                         </h5>
                         <p>
-                            {getAuthorNames(course?.authors || [], authorsList)}
+                            {getAuthorNames(course?.authors || [], authorsData)}
                         </p>
                     </div>
                 </div>

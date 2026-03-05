@@ -7,25 +7,18 @@ import AuthorSection from "./AuthorSection/AuthorSection";
 import { Author, Course } from "../../types";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
+import { saveCourse } from "@/store/courses/coursesSlice";
+import { useDispatch } from "react-redux";
 
-type CreateCourseProps = {
-    readonly onCreateCourse: (course: Course) => void;
-    readonly onUpdateAuthors: (authors: Author[]) => void;
-    readonly currentAuthorsList: Author[];
-};
-
-function CreateCourse({
-    onCreateCourse,
-    onUpdateAuthors,
-    currentAuthorsList,
-}: CreateCourseProps) {
+function CreateCourse() {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [duration, setDuration] = useState(0);
     const [courseAuthorsList, setCourseAuthorsList] = useState<Author[]>([]);
-    const [authorsList, setAuthorsList] = useState(currentAuthorsList);
     const [formValid, setFormValid] = useState(true);
+
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     function handleTitleChange(value: string) {
         setTitle(value.trimStart());
@@ -48,26 +41,14 @@ function CreateCourse({
         setCourseAuthorsList([...courseAuthorsList, author]);
     }
 
-    function handleAuthorsListChange(authors: Author[]) {
-        setAuthorsList(authors);
-    }
-
-    function clearAllFields() {
-        setTitle("");
-        setDescription("");
-        setDuration(0);
-        if (courseAuthorsList.length !== 0)
-            setAuthorsList([...authorsList, ...courseAuthorsList]);
-        setCourseAuthorsList([]);
-    }
-
     function validateCreationForm(e: React.FormEvent) {
         e.preventDefault();
         if (
             !(
                 title.trim().length >= 2 &&
                 description.trim().length >= 2 &&
-                duration > 0
+                duration > 0 &&
+                courseAuthorsList.length > 0
             )
         ) {
             formValid && setFormValid(false);
@@ -88,19 +69,21 @@ function CreateCourse({
             authors: courseAuthorsList.map((author) => author.id),
             creationDate: new Date().toLocaleDateString("en-GB"),
         };
-        onCreateCourse(newCourse);
-        onUpdateAuthors(courseAuthorsList);
+        dispatch(saveCourse(newCourse));
 
         navigate("/courses");
         clearAllFields();
     }
 
-    function getCourseAuthors(): Author[] {
-        return courseAuthorsList;
+    function clearAllFields() {
+        setTitle("");
+        setDescription("");
+        setDuration(0);
+        setCourseAuthorsList([]);
     }
 
-    function getAuthorsList(): Author[] {
-        return authorsList;
+    function getCourseAuthors(): Author[] {
+        return courseAuthorsList;
     }
 
     function onCancel() {
@@ -152,8 +135,7 @@ function CreateCourse({
                         addCourseAuthor={handleAddingSingleCourseAuthor}
                         getCourseAuthors={getCourseAuthors}
                         updateCourseAuthors={handleCourseAuthorsListChange}
-                        getAuthorsList={getAuthorsList}
-                        updateAuthorsList={handleAuthorsListChange}
+                        isFormValid={formValid}
                     />
                 </form>
                 <div className="create-course--button-container">

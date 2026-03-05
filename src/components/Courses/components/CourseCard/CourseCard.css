@@ -63,3 +63,14 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.course-info-buttons {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.course-info-buttons > button:nth-last-child(-n + 2) {
+    max-width: 61px;
+    min-width: 61px;
+}
