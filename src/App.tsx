@@ -5,13 +5,14 @@ import Registration from "./components/Registration/Registration.tsx";
 import Login from "./components/Login/Login.tsx";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute.tsx";
 import CourseInfo from "./components/CourseInfo/CourseInfo.tsx";
-import CreateCourse from "./components/CreateCourse/CreateCourse.tsx";
+import CreateCourse from "./components/CourseForm/CourseForm.tsx";
 import Header from "./components/Header/Header.tsx";
 import { useSelector } from "react-redux";
 import { User } from "./types.ts";
+import { RootState } from "./store/index.ts";
 
 function App() {
-    const user: User = useSelector((state: any) => state.userSlice);
+    const user: User = useSelector((state: RootState) => state.userSlice.user);
 
     return (
         <>
@@ -22,21 +23,15 @@ function App() {
                 <Route
                     path="/login"
                     element={
-                        user.isAuth ? (
-                            <Navigate to={"/courses"} replace />
-                        ) : (
-                            <Login />
-                        )
+                        // user.isAuth ? (
+                        //     <Navigate to={"/courses"} replace />
+                        // ) : (
+                        //     <Login />
+                        // )
+                        <Login />
                     }
                 />
-                <Route
-                    path="/courses"
-                    element={
-                        <PrivateRoute>
-                            <Courses />
-                        </PrivateRoute>
-                    }
-                />
+                <Route path="/courses" element={<Courses />} />
                 <Route
                     path="/courses/:courseId"
                     element={

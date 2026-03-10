@@ -74,3 +74,8 @@
     max-width: 61px;
     min-width: 61px;
 }
+
+.course-info-buttons.single-button-container .button {
+    max-width: 140px;
+    min-width: auto;
+}

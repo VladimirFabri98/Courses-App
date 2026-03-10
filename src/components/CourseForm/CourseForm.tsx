@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Input from "../../common/Input/Input";
-import "./CreateCourse.css";
+import "./CourseForm.css";
 import Button from "../../common/Button/Button";
 import Duration from "./Duration/Duration";
 import AuthorSection from "./AuthorSection/AuthorSection";

@@ -1,17 +1,12 @@
 import { Author } from "@/types";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAuthors } from "@/services/services";
+import { createSlice } from "@reduxjs/toolkit";
+import { fetchAuthors } from "./thunk";
 
 const authorsInitialState = {
     authorsData: [] as Author[],
     authorsStatus: "idle",
     error: null as string | null,
 };
-
-export const fetchAuthors = createAsyncThunk(
-    "authors/fetchAuthors",
-    getAuthors
-);
 
 const authorsSlice = createSlice({
     name: "authors",

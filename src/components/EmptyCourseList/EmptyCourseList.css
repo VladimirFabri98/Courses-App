@@ -29,3 +29,7 @@
     line-height: 24px;
     align-self: center;
 }
+
+.empty-no-permission {
+    text-align: center;
+}

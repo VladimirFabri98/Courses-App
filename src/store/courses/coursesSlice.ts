@@ -1,17 +1,12 @@
 import { Course } from "@/types";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getCourses } from "@/services/services";
+import { createSlice } from "@reduxjs/toolkit";
+import { deleteCourseById, fetchCourses } from "./thunk";
 
 const coursesInitialState = {
     courseData: [] as Course[],
     status: "idle",
     error: null as string | null,
 };
-
-export const fetchCourses = createAsyncThunk(
-    "courses/fetchCourses",
-    getCourses
-);
 
 const coursesSlice = createSlice({
     name: "courses",
@@ -47,6 +42,10 @@ const coursesSlice = createSlice({
         builder.addCase(fetchCourses.rejected, (state, action) => {
             state.status = "failed";
             state.error = action.error.message ?? "failed to fetch";
+        });
+
+        builder.addCase(deleteCourseById.fulfilled, (state) => {
+            state.status = "idle";
         });
     },
 });

@@ -17,9 +17,15 @@ export type User = {
     name: string;
     email: string;
     token: string;
+    role: string;
 };
 
 export type BackEndResponse<T = object> = {
     successful: string;
     result: T[];
+};
+
+export type BackEndResponseSingular<T = object> = {
+    successful: string;
+    result: T;
 };

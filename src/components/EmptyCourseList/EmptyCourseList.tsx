@@ -2,7 +2,11 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../common/Button/Button";
 import "./EmptyCourseList.css";
 
-export default function EmptyCourseList() {
+type EmptyCourseListProps = {
+    readonly userRole: string;
+};
+
+export default function EmptyCourseList({ userRole }: EmptyCourseListProps) {
     const navigate = useNavigate();
 
     return (
@@ -11,13 +15,21 @@ export default function EmptyCourseList() {
             <h5 className="empty-subtitle">
                 {`Please use "Add New Course" button to add your first course`}
             </h5>
-            <Button
-                onClick={() => {
-                    navigate("/courses/add");
-                }}
-            >
-                Add new course
-            </Button>
+            {userRole === "admin" ? (
+                <Button
+                    onClick={() => {
+                        navigate("/courses/add");
+                    }}
+                >
+                    Add new course
+                </Button>
+            ) : (
+                <h5 className="empty-subtitle empty-no-permission">
+                    You don't have permissions to create a course. <br></br>{" "}
+                    Please log in as ADMIN" is displayed instead of 'ADD NEW
+                    COURSE' button.
+                </h5>
+            )}
         </main>
     );
 }

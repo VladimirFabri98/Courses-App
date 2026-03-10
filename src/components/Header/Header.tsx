@@ -4,8 +4,8 @@ import logo from "../../assets/header-logo.svg";
 import "./Header.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { User } from "@/types";
-import { useDispatch } from "react-redux";
-import { userLogout } from "@/store/user/userSlice";
+import { logoutUser } from "@/store/user/thunk";
+import { useAppDispatch } from "@/store";
 
 type HeaderProps = {
     user: User;
@@ -14,13 +14,16 @@ type HeaderProps = {
 export default function Header({ user }: HeaderProps) {
     const navigate = useNavigate();
     const location = useLocation();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    function onButtonClick() {
+    async function onButtonClick() {
         if (user.isAuth) {
-            dispatch(userLogout());
+            if (user.role === "user" && user.token) {
+                await dispatch(logoutUser(user.token));
+            }
             localStorage.clear();
         }
+
         navigate("/login");
     }
 
