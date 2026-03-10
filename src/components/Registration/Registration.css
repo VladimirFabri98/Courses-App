@@ -1,0 +1,49 @@
+.registration-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 33px;
+    margin: 71px auto;
+}
+
+.registration-title {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: 0px;
+    color: #333e48;
+}
+
+.registration-form-container {
+    padding: 77px 150px 61px;
+    background-color: #fff;
+}
+.registration-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.registration-alternate-login {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0px;
+    margin-top: 4px;
+    color: #333e48;
+}
+
+.registration-alternate-login a {
+    font-weight: 700;
+    color: #333e48;
+    text-decoration: none;
+}
+
+.registration-form Button {
+    width: 100%;
+}
+
+.registration--result-message {
+    font-weight: 700;
+    color: green;
+    margin-top: 12px;
+}

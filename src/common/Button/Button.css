@@ -1,0 +1,40 @@
+.button {
+    width: 140px;
+    height: 50px;
+    border-radius: 4px;
+    background-color: #007298;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    border: none;
+    text-transform: uppercase;
+    font-family:
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Oxygen,
+        Ubuntu,
+        Cantarell,
+        "Open Sans",
+        "Helvetica Neue",
+        sans-serif;
+}
+
+.button:hover {
+    cursor: pointer;
+}
+
+.button:active {
+    border: none;
+}
+
+.button:visited {
+    border: none;
+}
+
+.button:link {
+    border: none;
+}
