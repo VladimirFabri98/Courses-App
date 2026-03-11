@@ -4,7 +4,7 @@ import {
     getCourses,
     updateCourse,
 } from "@/services/services";
-import { Course } from "@/types";
+import { CourseDto } from "@/types";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchCourses = createAsyncThunk(
@@ -14,13 +14,13 @@ export const fetchCourses = createAsyncThunk(
 
 export const addNewCourse = createAsyncThunk(
     "courses/add",
-    ({ token, body }: { token: string; body: Course }) =>
+    ({ token, body }: { token: string; body: CourseDto }) =>
         addCourse(token, JSON.stringify(body))
 );
 
 export const updateCurrentCourse = createAsyncThunk(
     "courses/update",
-    ({ token, body, id }: { token: string; body: Course; id: string }) =>
+    ({ token, body, id }: { token: string; body: CourseDto; id: string }) =>
         updateCourse(token, JSON.stringify(body), id)
 );
 

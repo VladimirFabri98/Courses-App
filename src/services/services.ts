@@ -44,28 +44,28 @@ export const getCurrentUser = (authToken: string) =>
     getApiResponse<BackEndResponseSingular<User>>(`users/me`, "GET", authToken);
 
 export const addCourse = (authToken: string, body: BodyInit) =>
-    getApiResponse<BackEndResponse<Course>>(
+    getApiResponse<BackEndResponseSingular<Course>>(
         "courses/add",
         "POST",
         authToken,
         body
     );
 export const updateCourse = (authToken: string, body: BodyInit, id: string) =>
-    getApiResponse<BackEndResponse<Course>>(
+    getApiResponse<BackEndResponseSingular<Course>>(
         `courses/${id}`,
         "PUT",
         authToken,
         body
     );
 export const addAuthor = (authToken: string, body: BodyInit) =>
-    getApiResponse<BackEndResponse<Author>>(
+    getApiResponse<BackEndResponseSingular<Author>>(
         "authors/add",
         "POST",
         authToken,
         body
     );
 export const deleteCourse = (authToken: string, id: string) =>
-    getApiResponse<BackEndResponse<string>>(
+    getApiResponse<BackEndResponseSingular<string>>(
         `courses/${id}`,
         "DELETE",
         authToken

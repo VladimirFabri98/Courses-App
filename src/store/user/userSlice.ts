@@ -4,7 +4,7 @@ import { User } from "@/types";
 
 const userInitialState = {
     user: {} as User,
-    userStatus: "idle",
+    userStatus: "loggedOut",
     error: null as string | null,
 };
 
@@ -28,6 +28,7 @@ const userSlice = createSlice({
                 token: action.payload.token,
                 role: action.payload.role,
             };
+            state.userStatus = "loggedIn";
         },
         // userLogout: (state) => {
         //     state.user = userLoggedOutState;
@@ -44,7 +45,7 @@ const userSlice = createSlice({
             state.user.token = user?.token;
             state.user.role = user?.role;
 
-            state.userStatus = "succeeded";
+            state.userStatus = "loggedIn";
         });
         builder.addCase(getCurrentUserData.rejected, (state, action) => {
             state.userStatus = "failed";
@@ -56,7 +57,8 @@ const userSlice = createSlice({
 
         builder.addCase(logoutUser.fulfilled, (state) => {
             state.user = userLoggedOutState;
-            state.userStatus = "idle";
+            localStorage.clear();
+            state.userStatus = "loggedOut";
         });
 
         builder.addCase(logoutUser.rejected, (state, action) => {

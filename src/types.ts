@@ -3,11 +3,22 @@ export type Author = {
     name: string;
 };
 
+export type AuthorDto = {
+    name: string;
+};
+
 export type Course = {
     id: string;
     title: string;
     description: string;
     creationDate: string;
+    duration: number;
+    authors: string[];
+};
+
+export type CourseDto = {
+    title: string;
+    description: string;
     duration: number;
     authors: string[];
 };

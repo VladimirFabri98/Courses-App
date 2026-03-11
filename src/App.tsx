@@ -23,30 +23,57 @@ function App() {
                 <Route
                     path="/login"
                     element={
-                        // user.isAuth ? (
-                        //     <Navigate to={"/courses"} replace />
-                        // ) : (
-                        //     <Login />
-                        // )
-                        <Login />
+                        user.isAuth ? (
+                            <Navigate to={"/courses"} replace />
+                        ) : (
+                            <Login />
+                        )
                     }
                 />
-                <Route path="/courses" element={<Courses />} />
+                <Route
+                    path="/courses"
+                    element={
+                        user.isAuth ? (
+                            <Courses />
+                        ) : (
+                            <Navigate to={"/login"} replace />
+                        )
+                    }
+                />
                 <Route
                     path="/courses/:courseId"
                     element={
-                        <PrivateRoute>
+                        user.isAuth ? (
                             <CourseInfo />
-                        </PrivateRoute>
+                        ) : (
+                            <Navigate to={"/login"} replace />
+                        )
                     }
                 />
 
                 <Route
                     path="/courses/add"
                     element={
-                        <PrivateRoute>
-                            <CreateCourse />
-                        </PrivateRoute>
+                        user.isAuth ? (
+                            <PrivateRoute>
+                                <CreateCourse />
+                            </PrivateRoute>
+                        ) : (
+                            <Navigate to={"/login"} replace />
+                        )
+                    }
+                />
+
+                <Route
+                    path="/courses/update/:courseId"
+                    element={
+                        user.isAuth ? (
+                            <PrivateRoute>
+                                <CreateCourse />
+                            </PrivateRoute>
+                        ) : (
+                            <Navigate to={"/login"} replace />
+                        )
                     }
                 />
 

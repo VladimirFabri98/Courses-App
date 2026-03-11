@@ -39,7 +39,6 @@ export default function Login() {
         localStorage.setItem("token", requestResult.result);
         // Targets user/me endpoint
         const userResult = await getCurrentUser(requestResult.result);
-        console.log(userResult);
         dispatch(
             userLogin({
                 name: requestResult.user.name,
@@ -48,9 +47,7 @@ export default function Login() {
                 role: userResult.result.role,
             })
         );
-        setTimeout(() => {
-            navigate("/courses");
-        }, 500);
+        navigate("/courses");
     }
 
     return (

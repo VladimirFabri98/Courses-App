@@ -18,10 +18,8 @@ export default function Header({ user }: HeaderProps) {
 
     async function onButtonClick() {
         if (user.isAuth) {
-            if (user.role === "user" && user.token) {
-                await dispatch(logoutUser(user.token));
-            }
-            localStorage.clear();
+            const token = localStorage.getItem("token");
+            if (token) dispatch(logoutUser(token));
         }
 
         navigate("/login");

@@ -7,7 +7,7 @@ import { Author, Course, User } from "../../../../types";
 import { useNavigate } from "react-router-dom";
 import deleteLogo from "./../../../../assets/course-card-trash.svg";
 import editCourse from "./../../../../assets/course-card-edit.svg";
-import { deleteCourseById, updateCurrentCourse } from "@/store/courses/thunk";
+import { deleteCourseById } from "@/store/courses/thunk";
 import { useAppDispatch } from "@/store";
 
 type CourseCardProps = {
@@ -21,6 +21,10 @@ export default function CourseCard({ course, authors, user }: CourseCardProps) {
     const dispatch = useAppDispatch();
     function onShowCourse(id: string) {
         navigate(`/courses/${id}`);
+    }
+
+    function onUpdate(id: string) {
+        navigate(`/courses/update/${id}`);
     }
 
     return (
@@ -70,13 +74,7 @@ export default function CourseCard({ course, authors, user }: CourseCardProps) {
                                 </Button>
                                 <Button
                                     onClick={() => {
-                                        dispatch(
-                                            updateCurrentCourse({
-                                                body: course,
-                                                id: course.id,
-                                                token: user.token,
-                                            })
-                                        );
+                                        onUpdate(course.id);
                                     }}
                                 >
                                     <img src={editCourse} alt="Edit course" />

@@ -8,7 +8,6 @@ import { fetchCourses } from "@/store/courses/thunk";
 import { RootState, useAppDispatch } from "@/store";
 import EmptyCourseList from "../EmptyCourseList/EmptyCourseList";
 import { fetchAuthors } from "@/store/authors/thunk";
-import { getCurrentUserData } from "@/store/user/thunk";
 
 export default function Courses() {
     const [searchResult, setSearchResult] = useState<Course[]>([]);
@@ -20,21 +19,20 @@ export default function Courses() {
         (state: RootState) => state.authorsSlice
     );
 
-    const { userStatus, user } = useSelector(
-        (state: RootState) => state.userSlice
-    );
+    const { user } = useSelector((state: RootState) => state.userSlice);
 
     useEffect(() => {
-        // const token = localStorage.getItem("token");
-        // console.log(token);
         if (status === "idle") {
             dispatch(fetchCourses());
         }
         if (authorsStatus === "idle") {
             dispatch(fetchAuthors());
         }
-        // if (userStatus === "idle" && token) {
-        //     dispatch(getCurrentUserData(token));
+        // if (userStatus === "loggedOut") {
+        //     const token = localStorage.getItem("token");
+        //     if (token) {
+        //         dispatch(getCurrentUserData(token));
+        //     }
         // }
     }, [status]);
 

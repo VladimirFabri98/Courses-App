@@ -26,8 +26,7 @@ export default function EmptyCourseList({ userRole }: EmptyCourseListProps) {
             ) : (
                 <h5 className="empty-subtitle empty-no-permission">
                     You don't have permissions to create a course. <br></br>{" "}
-                    Please log in as ADMIN" is displayed instead of 'ADD NEW
-                    COURSE' button.
+                    Please log in as ADMIN
                 </h5>
             )}
         </main>
