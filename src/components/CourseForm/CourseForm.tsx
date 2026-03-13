@@ -1,24 +1,42 @@
 import { useState } from "react";
 import Input from "../../common/Input/Input";
-import "./CreateCourse.css";
+import "./CourseForm.css";
 import Button from "../../common/Button/Button";
 import Duration from "./Duration/Duration";
 import AuthorSection from "./AuthorSection/AuthorSection";
-import { Author, Course } from "../../types";
-import { v4 as uuidv4 } from "uuid";
-import { useNavigate } from "react-router-dom";
-import { saveCourse } from "@/store/courses/coursesSlice";
-import { useDispatch } from "react-redux";
+import { Author, Course, CourseDto } from "../../types";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "@/store";
+import { addNewCourse, updateCurrentCourse } from "@/store/courses/thunk";
 
 function CreateCourse() {
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [duration, setDuration] = useState(0);
-    const [courseAuthorsList, setCourseAuthorsList] = useState<Author[]>([]);
+    const { courseData } = useSelector(
+        (state: RootState) => state.coursesSlice
+    );
+    const { authorsData } = useSelector(
+        (state: RootState) => state.authorsSlice
+    );
+    const params = useParams();
+    const courseUpdateId = params.courseId;
+    const course = courseData.find(
+        (course: Course) => course.id === courseUpdateId
+    );
+    const [title, setTitle] = useState(course ? course.title : "");
+    const [description, setDescription] = useState(
+        course ? course.description : ""
+    );
+    const [duration, setDuration] = useState(course ? course.duration : 0);
+    const [courseAuthorsList, setCourseAuthorsList] = useState<Author[]>(
+        courseUpdateId && course
+            ? authorsData.filter((author) => course.authors.includes(author.id))
+            : []
+    );
     const [formValid, setFormValid] = useState(true);
+    const { user } = useSelector((state: RootState) => state.userSlice);
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     function handleTitleChange(value: string) {
         setTitle(value.trimStart());
@@ -56,20 +74,27 @@ function CreateCourse() {
         }
 
         !formValid && setFormValid(true);
-        createNewCourse();
+        makeCourseChanges();
     }
 
-    function createNewCourse() {
-        const newCourseId: string = uuidv4();
-        const newCourse: Course = {
-            id: newCourseId,
+    function makeCourseChanges() {
+        const newCourse: CourseDto = {
             title: title,
             description: description,
             duration: duration,
             authors: courseAuthorsList.map((author) => author.id),
-            creationDate: new Date().toLocaleDateString("en-GB"),
         };
-        dispatch(saveCourse(newCourse));
+        if (courseUpdateId) {
+            dispatch(
+                updateCurrentCourse({
+                    token: user.token,
+                    body: newCourse,
+                    id: course ? course.id : "",
+                })
+            );
+        } else {
+            dispatch(addNewCourse({ token: user.token, body: newCourse }));
+        }
 
         navigate("/courses");
         clearAllFields();
@@ -94,7 +119,7 @@ function CreateCourse() {
         <>
             <div className="create-course--container">
                 <h3 className="create-course--title">
-                    Course Edit/Create Page
+                    {courseUpdateId ? "Course Edit Page" : "Course Create Page"}
                 </h3>
                 <form
                     id="create-course-form"
@@ -136,12 +161,13 @@ function CreateCourse() {
                         getCourseAuthors={getCourseAuthors}
                         updateCourseAuthors={handleCourseAuthorsListChange}
                         isFormValid={formValid}
+                        user={user}
                     />
                 </form>
                 <div className="create-course--button-container">
                     <Button onClick={onCancel}>Cancel</Button>
                     <Button type="submit" form="create-course-form">
-                        Create Course
+                        {courseUpdateId ? "Edit Course" : "Create Course"}
                     </Button>
                 </div>
             </div>

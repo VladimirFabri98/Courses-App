@@ -4,10 +4,10 @@ import CourseCard from "./components/CourseCard/CourseCard";
 import Utilities from "./components/Utilities/Utilities";
 import "./Courses.css";
 import { useEffect, useState } from "react";
-import { fetchCourses } from "@/store/courses/coursesSlice";
+import { fetchCourses } from "@/store/courses/thunk";
 import { RootState, useAppDispatch } from "@/store";
 import EmptyCourseList from "../EmptyCourseList/EmptyCourseList";
-import { fetchAuthors } from "@/store/authors/authorsSlice";
+import { fetchAuthors } from "@/store/authors/thunk";
 
 export default function Courses() {
     const [searchResult, setSearchResult] = useState<Course[]>([]);
@@ -19,6 +19,8 @@ export default function Courses() {
         (state: RootState) => state.authorsSlice
     );
 
+    const { user } = useSelector((state: RootState) => state.userSlice);
+
     useEffect(() => {
         if (status === "idle") {
             dispatch(fetchCourses());
@@ -26,7 +28,13 @@ export default function Courses() {
         if (authorsStatus === "idle") {
             dispatch(fetchAuthors());
         }
-    }, [status, authorsStatus, dispatch]);
+        // if (userStatus === "loggedOut") {
+        //     const token = localStorage.getItem("token");
+        //     if (token) {
+        //         dispatch(getCurrentUserData(token));
+        //     }
+        // }
+    }, [status]);
 
     function handleSearch(searchString: string) {
         const filteredCourses = courseData.filter((course: Course) => {
@@ -47,12 +55,13 @@ export default function Courses() {
     }
 
     return !courseData.length ? (
-        <EmptyCourseList />
+        <EmptyCourseList userRole={user.role} />
     ) : (
         <main className="courses-main">
             <Utilities
                 onSearch={handleSearch}
                 onSearchCleared={handleSearchCleared}
+                userRole={user.role}
             />
             <ul className="courses-list">
                 {searchResult.length !== 0
@@ -62,6 +71,7 @@ export default function Courses() {
                                   key={course.id}
                                   course={course}
                                   authors={authorsData}
+                                  user={user}
                               />
                           );
                       })
@@ -71,6 +81,7 @@ export default function Courses() {
                                   key={course.id}
                                   course={course}
                                   authors={authorsData}
+                                  user={user}
                               />
                           );
                       })}

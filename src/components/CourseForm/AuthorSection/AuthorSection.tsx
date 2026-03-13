@@ -2,18 +2,18 @@ import Button from "../../../common/Button/Button";
 import Input from "../../../common/Input/Input";
 import AuthorItem from "../AuthorItem/AuthorItem";
 import "./AuthorSection.css";
-import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { Author } from "../../../types";
-import { useDispatch, useSelector } from "react-redux";
-import { saveAuthor } from "@/store/authors/authorsSlice";
-import { RootState } from "@/store";
+import { useEffect, useState } from "react";
+import { Author, User } from "../../../types";
+import { RootState, useAppDispatch } from "@/store";
+import { useSelector } from "react-redux";
+import { addNewAuthor } from "@/store/authors/thunk";
 
 type AuthorSectionProps = {
     readonly getCourseAuthors: () => Author[];
     readonly updateCourseAuthors: (authors: Author[]) => void;
     readonly addCourseAuthor: (author: Author) => void;
     readonly isFormValid: boolean;
+    readonly user: User;
 };
 
 export default function AuthorSection({
@@ -21,14 +21,24 @@ export default function AuthorSection({
     updateCourseAuthors,
     addCourseAuthor,
     isFormValid,
+    user,
 }: AuthorSectionProps) {
     const [authorName, setAuthorName] = useState("");
     const [formValid, setFormValid] = useState(true);
-    const { authorsData } = useSelector(
+    const { authorsData, authorsStatus } = useSelector(
         (state: RootState) => state.authorsSlice
     );
     const [tempAuthorsList, setTempAuthorsList] = useState(authorsData);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        const listWithoutCourseAuthors = authorsData.filter((authorOne) => {
+            return !getCourseAuthors().some(
+                (authorTwo) => authorTwo.id === authorOne.id
+            );
+        });
+        setTempAuthorsList(listWithoutCourseAuthors);
+    }, [authorsStatus]);
 
     function onAuthorNameChange(value: string) {
         setAuthorName(value.trimStart());
@@ -41,13 +51,12 @@ export default function AuthorSection({
         }
 
         setFormValid(true);
-        const newAuthorId = uuidv4();
-        const newAuthor = { id: newAuthorId, name: authorName };
-        dispatch(saveAuthor(newAuthor));
-        setTempAuthorsList((prev: Author[]) => [...prev, newAuthor]);
+        const newAuthor = { name: authorName };
+        dispatch(addNewAuthor({ token: user.token, body: newAuthor }));
         onAuthorNameChange("");
     }
 
+    // UI functions - Relationship between Authors List(state in Author Section) and Course Authors List (state in Course Form)
     function onAddingFromListOfAuthorsToCourseAuthors(authorId: string) {
         const author = tempAuthorsList.find((a: Author) => a.id === authorId);
         if (!author) return;

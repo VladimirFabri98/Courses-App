@@ -5,13 +5,14 @@ import Registration from "./components/Registration/Registration.tsx";
 import Login from "./components/Login/Login.tsx";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute.tsx";
 import CourseInfo from "./components/CourseInfo/CourseInfo.tsx";
-import CreateCourse from "./components/CreateCourse/CreateCourse.tsx";
+import CreateCourse from "./components/CourseForm/CourseForm.tsx";
 import Header from "./components/Header/Header.tsx";
 import { useSelector } from "react-redux";
 import { User } from "./types.ts";
+import { RootState } from "./store/index.ts";
 
 function App() {
-    const user: User = useSelector((state: any) => state.userSlice);
+    const user: User = useSelector((state: RootState) => state.userSlice.user);
 
     return (
         <>
@@ -32,26 +33,47 @@ function App() {
                 <Route
                     path="/courses"
                     element={
-                        <PrivateRoute>
+                        user.isAuth ? (
                             <Courses />
-                        </PrivateRoute>
+                        ) : (
+                            <Navigate to={"/login"} replace />
+                        )
                     }
                 />
                 <Route
                     path="/courses/:courseId"
                     element={
-                        <PrivateRoute>
+                        user.isAuth ? (
                             <CourseInfo />
-                        </PrivateRoute>
+                        ) : (
+                            <Navigate to={"/login"} replace />
+                        )
                     }
                 />
 
                 <Route
                     path="/courses/add"
                     element={
-                        <PrivateRoute>
-                            <CreateCourse />
-                        </PrivateRoute>
+                        user.isAuth ? (
+                            <PrivateRoute>
+                                <CreateCourse />
+                            </PrivateRoute>
+                        ) : (
+                            <Navigate to={"/login"} replace />
+                        )
+                    }
+                />
+
+                <Route
+                    path="/courses/update/:courseId"
+                    element={
+                        user.isAuth ? (
+                            <PrivateRoute>
+                                <CreateCourse />
+                            </PrivateRoute>
+                        ) : (
+                            <Navigate to={"/login"} replace />
+                        )
                     }
                 />
 

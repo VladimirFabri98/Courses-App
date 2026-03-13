@@ -6,15 +6,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { emailValidation } from "@/helpers/validateEmail";
 import { postRequest } from "@/helpers/postRequest";
 import { apiUrl } from "../../constants";
-import { useDispatch } from "react-redux";
 import { userLogin } from "@/store/user/userSlice";
+// import { getCurrentUserData } from "@/store/user/thunk";
+import { useAppDispatch } from "@/store";
+import { getCurrentUser } from "@/services/services";
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [formValid, setFormValid] = useState(true);
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     function handleEmailChange(email: string): void {
         setEmail(email.trimStart());
@@ -35,11 +37,14 @@ export default function Login() {
         const requestResult = await postRequest(`${apiUrl}/login`, loginValue);
         if (!requestResult?.successful) return;
         localStorage.setItem("token", requestResult.result);
+        // Targets user/me endpoint
+        const userResult = await getCurrentUser(requestResult.result);
         dispatch(
             userLogin({
                 name: requestResult.user.name,
                 email: requestResult.user.email,
                 token: requestResult.result,
+                role: userResult.result.role,
             })
         );
         navigate("/courses");
